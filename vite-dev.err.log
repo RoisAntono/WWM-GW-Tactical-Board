@@ -1077,3 +1077,9 @@ C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple expor
       at async EnvironmentPluginContainer.transform (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:28801:14)
       at async loadAndTransform (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:22670:26)
       at async viteTransformMiddleware (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:24546:20)
+
+new URL("../../Assets/Tools/draw.svg", import.meta.url) doesn't exist at build time, it will remain unchanged to be resolved at runtime. If this is intended, you can use the /* @vite-ignore */ comment to suppress this warning.
+
+new URL("../../Assets/Tools/move.svg", import.meta.url) doesn't exist at build time, it will remain unchanged to be resolved at runtime. If this is intended, you can use the /* @vite-ignore */ comment to suppress this warning.
+
+new URL("../../Assets/Tools/remove.svg", import.meta.url) doesn't exist at build time, it will remain unchanged to be resolved at runtime. If this is intended, you can use the /* @vite-ignore */ comment to suppress this warning.
