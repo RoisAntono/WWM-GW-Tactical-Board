@@ -1,7 +1,3 @@
-import { randomBytes } from 'node:crypto';
-import { createShareSnapshotStore } from '../src/server/database';
-import { createNeonSqlExecutor } from '../src/server/database/neon/client';
-
 type ApiRequest = {
   method?: string;
   query?: Record<string, string | string[] | undefined>;
@@ -60,7 +56,7 @@ async function createShare(request: ApiRequest, response: ApiResponse) {
   const ttlDays = readTtlDays(body.ttlDays);
   const now = new Date();
   const expiresAt = new Date(now.getTime() + ttlDays * 24 * 60 * 60 * 1000).toISOString();
-  const store = createConfiguredStore();
+  const store = await createConfiguredStore();
   const ciphertext = body.ciphertext;
   const iv = body.iv;
   const compression = body.compression;
@@ -69,7 +65,7 @@ async function createShare(request: ApiRequest, response: ApiResponse) {
     return;
   }
   const record = await store.create({
-    id: createShareId(),
+    id: await createShareId(),
     ciphertext,
     iv,
     compression,
@@ -90,7 +86,7 @@ async function readShare(request: ApiRequest, response: ApiResponse) {
     return;
   }
 
-  const store = createConfiguredStore();
+  const store = await createConfiguredStore();
   const record = await store.findById(id);
   if (!record) {
     response.status(404).json({ error: 'Share link was not found or has expired.' });
@@ -107,11 +103,16 @@ async function readShare(request: ApiRequest, response: ApiResponse) {
   });
 }
 
-function createConfiguredStore() {
+async function createConfiguredStore() {
   const databaseUrl = process.env.NEON_DATABASE_URL;
   if (!databaseUrl) {
     throw new Error('NEON_DATABASE_URL is not configured.');
   }
+
+  const [{ createShareSnapshotStore }, { createNeonSqlExecutor }] = await Promise.all([
+    import('../src/server/database'),
+    import('../src/server/database/neon/client'),
+  ]);
 
   return createShareSnapshotStore({
     provider: 'neon',
@@ -164,6 +165,7 @@ function readQueryString(query: ApiRequest['query'], key: string): string | unde
   return Array.isArray(value) ? value[0] : value;
 }
 
-function createShareId(): string {
+async function createShareId(): Promise<string> {
+  const { randomBytes } = await import('node:crypto');
   return randomBytes(12).toString('base64url');
 }
