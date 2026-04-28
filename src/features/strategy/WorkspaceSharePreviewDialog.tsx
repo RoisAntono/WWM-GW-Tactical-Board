@@ -1,6 +1,7 @@
-import { useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AlertTriangle, Save, X } from 'lucide-react';
+import { cloudSlotIndexes, listCloudSlots, saveCloudSlot, type CloudSlotIndex, type CloudSlotMetadata } from '../../app/cloudSaveSlots';
 import type { WorkspaceSharePayload } from '../../app/workspaceShareLink';
 import { BoardSnapshotPreview } from '../board/BoardSnapshotPreview';
 
@@ -11,14 +12,65 @@ export type WorkspaceSharePreviewState =
 
 type WorkspaceSharePreviewDialogProps = {
   state: WorkspaceSharePreviewState;
-  onSave: (payload: WorkspaceSharePayload) => void;
+  onSave: (payload: WorkspaceSharePayload) => void | Promise<void>;
   onClose: () => void;
 };
 
 export function WorkspaceSharePreviewDialog({ state, onSave, onClose }: WorkspaceSharePreviewDialogProps) {
   const titleId = useId();
+  const [selectedSlot, setSelectedSlot] = useState<CloudSlotIndex>(1);
+  const [slots, setSlots] = useState<CloudSlotMetadata[]>([]);
+  const [slotError, setSlotError] = useState('');
+  const [saving, setSaving] = useState(false);
   const payload = state.status === 'ready' ? state.payload : undefined;
   const activePhase = payload?.plan.phases.find((phase) => phase.id === payload.activePhaseId) ?? payload?.plan.phases[0];
+
+  useEffect(() => {
+    if (state.status !== 'ready') {
+      return;
+    }
+
+    let cancelled = false;
+    setSlotError('');
+    void listCloudSlots()
+      .then((nextSlots) => {
+        if (!cancelled) {
+          setSlots(nextSlots);
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setSlotError(error instanceof Error ? error.message : 'Unable to load cloud slots.');
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [state.status]);
+
+  const saveToSelectedSlot = async () => {
+    if (!payload) {
+      return;
+    }
+
+    const existing = slots.find((slot) => slot.slotIndex === selectedSlot);
+    if (existing && !window.confirm(`Overwrite ${existing.slotName}?`)) {
+      return;
+    }
+
+    setSaving(true);
+    setSlotError('');
+    try {
+      await saveCloudSlot(selectedSlot, payload, { slotName: existing?.slotName ?? `Slot ${selectedSlot}` });
+      await onSave(payload);
+    } catch (error) {
+      setSlotError(error instanceof Error ? error.message : 'Unable to save shared workspace to cloud slot.');
+      await onSave(payload);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return createPortal(
     <div className="modal-backdrop share-preview-backdrop" role="presentation">
@@ -58,14 +110,39 @@ export function WorkspaceSharePreviewDialog({ state, onSave, onClose }: Workspac
               <AlertTriangle size={16} />
               <span>Preview is read-only. Save Copy will replace your current local workspace with this snapshot.</span>
             </div>
+
+            <div className="share-slot-picker" aria-label="Choose cloud save slot">
+              <div>
+                <p className="eyebrow">Save Destination</p>
+                <strong>Choose a cloud slot before saving</strong>
+              </div>
+              <div className="share-slot-options">
+                {cloudSlotIndexes.map((slotIndex) => {
+                  const slot = slots.find((item) => item.slotIndex === slotIndex);
+                  return (
+                    <label key={slotIndex} className={`share-slot-option ${selectedSlot === slotIndex ? 'is-selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="share-slot"
+                        checked={selectedSlot === slotIndex}
+                        onChange={() => setSelectedSlot(slotIndex)}
+                      />
+                      <span>Slot {slotIndex}</span>
+                      <small>{slot?.snapshotTitle || slot?.slotName || 'Empty'}</small>
+                    </label>
+                  );
+                })}
+              </div>
+              {slotError ? <p className="share-error">{slotError}</p> : null}
+            </div>
           </>
         ) : null}
 
         <div className="modal-actions">
           {payload ? (
-            <button className="primary-button" onClick={() => onSave(payload)}>
+            <button className="primary-button" disabled={saving} onClick={saveToSelectedSlot}>
               <Save size={15} />
-              Save Copy
+              {saving ? 'Saving...' : 'Save Copy'}
             </button>
           ) : null}
           <button className="secondary-button" onClick={onClose}>

@@ -105,7 +105,7 @@ body {
 
 .top-bar {
   display: grid;
-  grid-template-columns: minmax(250px, 340px) minmax(300px, 1fr) minmax(0, auto);
+  grid-template-columns: minmax(250px, 320px) minmax(220px, 320px) minmax(0, 1fr);
   align-items: center;
   gap: 16px;
   padding: 10px 14px;
@@ -164,10 +164,13 @@ h3 {
 }
 
 .plan-meta {
+  position: relative;
+  z-index: 0;
   display: grid;
   grid-template-columns: minmax(260px, 1fr);
   gap: 10px;
   min-width: 0;
+  overflow: hidden;
 }
 
 input,
@@ -196,6 +199,8 @@ textarea:focus {
 }
 
 .top-actions {
+  position: relative;
+  z-index: 1;
   justify-content: flex-end;
   gap: 8px;
   min-width: 0;
@@ -1498,6 +1503,69 @@ button:disabled {
   line-height: 1.45;
 }
 
+.share-slot-picker {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(217, 182, 111, 0.18);
+  background: rgba(0, 0, 0, 0.18);
+  padding: 10px;
+}
+
+.share-slot-picker strong {
+  display: block;
+  color: #fff4dc;
+  font-size: 13px;
+}
+
+.share-slot-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.share-slot-option {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 4px 7px;
+  align-items: center;
+  min-width: 0;
+  border: 1px solid rgba(217, 182, 111, 0.16);
+  background: rgba(4, 7, 8, 0.6);
+  padding: 8px;
+  cursor: pointer;
+}
+
+.share-slot-option.is-selected {
+  border-color: rgba(240, 210, 140, 0.78);
+  background: rgba(217, 182, 111, 0.12);
+}
+
+.share-slot-option input {
+  width: 14px;
+  min-height: 14px;
+  accent-color: var(--gold);
+}
+
+.share-slot-option span,
+.share-slot-option small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.share-slot-option span {
+  color: #fff4dc;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.share-slot-option small {
+  grid-column: 2;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
 .share-warning svg,
 .share-preview-error svg {
   flex: 0 0 auto;
@@ -1590,6 +1658,99 @@ button:disabled {
     radial-gradient(circle at 50% 10%, rgba(217, 182, 111, 0.12), transparent 30%),
     #040607;
   overflow: hidden;
+}
+
+.cloud-saves-backdrop {
+  z-index: 82;
+}
+
+.cloud-saves-modal {
+  display: grid;
+  gap: 14px;
+  width: min(920px, calc(100vw - 40px));
+  max-height: min(820px, calc(100vh - 40px));
+  overflow: auto;
+  border: 1px solid rgba(217, 182, 111, 0.34);
+  background:
+    linear-gradient(180deg, rgba(15, 20, 23, 0.98), rgba(7, 10, 11, 0.98)),
+    url('../../Assets/any-backgroundcard.png') center/cover;
+  box-shadow: 0 28px 84px rgba(0, 0, 0, 0.72);
+  padding: 18px;
+}
+
+.cloud-saves-device {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(217, 182, 111, 0.16);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 9px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.cloud-saves-device svg {
+  color: var(--gold);
+}
+
+.cloud-saves-device .secondary-button {
+  margin-left: auto;
+}
+
+.cloud-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cloud-slot-card {
+  display: grid;
+  grid-template-rows: minmax(126px, 1fr) auto;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid rgba(217, 182, 111, 0.2);
+  background: rgba(5, 8, 9, 0.72);
+  padding: 12px;
+}
+
+.cloud-slot-card h3,
+.cloud-slot-card p,
+.cloud-slot-card small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cloud-slot-card h3 {
+  color: #fff4dc;
+  font-size: 16px;
+}
+
+.cloud-slot-card p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.cloud-slot-card small {
+  display: block;
+  margin-top: 8px;
+  color: var(--gold);
+  font-size: 11px;
+}
+
+.cloud-slot-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 34px 34px;
+  gap: 6px;
+}
+
+.cloud-slot-actions .primary-button,
+.cloud-slot-actions .secondary-button {
+  min-width: 0;
+  padding: 0 9px;
+  font-size: 12px;
 }
 
 @media (max-width: 560px) {
@@ -2585,6 +2746,22 @@ button:disabled {
   color: #0b0a08;
 }
 
+@media (max-width: 1600px) {
+  .app-shell {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .top-bar {
+    grid-template-columns: minmax(230px, 320px) minmax(260px, 1fr);
+    gap: 10px;
+  }
+
+  .top-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}
+
 @media (max-width: 1280px) {
   .app-shell {
     grid-template-rows: auto auto minmax(0, 1fr);
@@ -2975,6 +3152,10 @@ button:disabled {
     font-size: 12px;
   }
 
+  .share-slot-options {
+    grid-template-columns: 1fr;
+  }
+
   .share-preview-modal .modal-actions {
     position: sticky;
     bottom: 0;
@@ -2992,6 +3173,33 @@ button:disabled {
   .share-preview-modal .modal-actions .primary-button,
   .share-preview-modal .modal-actions .secondary-button {
     width: 100%;
+  }
+
+  .cloud-saves-backdrop {
+    place-items: stretch;
+    padding: 0;
+  }
+
+  .cloud-saves-modal {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-right: 0;
+    border-left: 0;
+    padding: calc(12px + env(safe-area-inset-top)) 10px calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .cloud-slot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cloud-slot-card {
+    grid-template-rows: auto auto;
+  }
+
+  .cloud-slot-actions {
+    grid-template-columns: 1fr 1fr 36px 36px;
   }
 }
 

@@ -2,6 +2,7 @@ import {
   FileDown,
   FileJson,
   FileSpreadsheet,
+  Cloud,
   Database,
   Maximize2,
   Minimize2,
@@ -32,9 +33,10 @@ type TopBarProps = {
   onViewChange: (view: 'board' | 'members' | 'settings') => void;
   fullBoard: boolean;
   onFullBoardToggle: () => void;
+  onCloudSavesOpen: () => void;
 };
 
-export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardToggle }: TopBarProps) {
+export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardToggle, onCloudSavesOpen }: TopBarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [importError, setImportError] = useState('');
   const [importReport, setImportReport] = useState<BackupCompatibilityReport>();
@@ -139,6 +141,9 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
           </button>
           <button className={`mode-toggle ${briefingMode ? 'is-active' : ''}`} onClick={() => setBriefingMode(!briefingMode)}>
             Briefing
+          </button>
+          <button className="icon-button" title="Cloud slots" aria-label="Cloud slots" onClick={onCloudSavesOpen}>
+            <Cloud size={16} />
           </button>
           <button className="icon-button" title="Share encrypted workspace link" aria-label="Share encrypted workspace link" onClick={handleCreateShareLink}>
             <Share2 size={16} />

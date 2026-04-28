@@ -3,11 +3,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePlanStore } from './store';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import { openWorkspaceShortShare, readWorkspaceShortShareId } from './workspaceShortShare';
-import { decryptWorkspaceShareHash, hasWorkspaceShareHash, type WorkspaceSharePayload } from './workspaceShareLink';
+import { createWorkspaceSharePayload, decryptWorkspaceShareHash, hasWorkspaceShareHash, type WorkspaceSharePayload } from './workspaceShareLink';
 import { BoardCanvas, type BoardCanvasHandle } from '../features/board/BoardCanvas';
 import { MemberDataPage } from '../features/guild/MemberDataPage';
 import { RosterPanel } from '../features/roster/RosterPanel';
 import { SettingsPage } from '../features/settings/SettingsPage';
+import { CloudSavesDialog } from '../features/strategy/CloudSavesDialog';
 import { InspectorPanel } from '../features/strategy/InspectorPanel';
 import { PhaseTabs } from '../features/strategy/PhaseTabs';
 import { TopBar } from '../features/strategy/TopBar';
@@ -25,6 +26,10 @@ export function App() {
   const [boardFocus, setBoardFocus] = useState(false);
   const [selectedObjectiveType, setSelectedObjectiveType] = useState<ObjectiveType>('red-tower');
   const [sharePreview, setSharePreview] = useState<WorkspaceSharePreviewState>();
+  const [cloudSavesOpen, setCloudSavesOpen] = useState(false);
+  const currentPlan = usePlanStore((state) => state.plan);
+  const currentGuild = usePlanStore((state) => state.guild);
+  const currentActivePhaseId = usePlanStore((state) => state.activePhaseId);
   const sanitizePlan = usePlanStore((state) => state.sanitizePlan);
   const setWorkspaceSnapshot = usePlanStore((state) => state.setWorkspaceSnapshot);
   useKeyboardShortcuts();
@@ -157,6 +162,7 @@ export function App() {
           onViewChange={changeView}
           fullBoard={fullBoard}
           onFullBoardToggle={fullBoard ? exitFullBoard : enterFullBoard}
+          onCloudSavesOpen={() => setCloudSavesOpen(true)}
         />
       )}
       {view === 'board' ? (
@@ -232,6 +238,12 @@ export function App() {
       {sharePreview ? (
         <WorkspaceSharePreviewDialog state={sharePreview} onSave={saveSharedWorkspace} onClose={closeSharePreview} />
       ) : null}
+      <CloudSavesDialog
+        open={cloudSavesOpen}
+        payload={createWorkspaceSharePayload(currentPlan, currentGuild, currentActivePhaseId)}
+        onLoad={saveSharedWorkspace}
+        onClose={() => setCloudSavesOpen(false)}
+      />
     </div>
   );
 }
