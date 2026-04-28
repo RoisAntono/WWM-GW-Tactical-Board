@@ -1,0 +1,197 @@
+
+> wwm-guild-wars-tactical-board@0.1.0 dev
+> vite --host 0.0.0.0 --port 5174
+
+[2m9:31:17 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because lockfile has changed
+
+  [32m[1mVITE[22m v7.3.2[39m  [2mready in [0m[1m464[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5174[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://192.168.100.2:[1m5174[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.23.144.1:[1m5174[22m/[39m
+[2m9:47:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:48:27 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx[22m
+[2m9:48:58 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m10:12:15 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m10:12:23 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m10:12:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m10:13:12 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx[22m
+[2m10:13:21 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx[22m
+[2m10:13:28 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/shared/ConfirmDialog.tsx[22m
+[2m10:14:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m10:15:12 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m10:20:56 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/settings/SettingsPage.tsx[22m
+[2m10:21:01 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m11:00:33 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m11:01:10 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m11:01:23 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m11:01:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/RosterPanel.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/TopBar.tsx, /src/features/board/BoardCanvas.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m11:01:55 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:02:46 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:02:49 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:02:54 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:02:59 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:03:06 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:03:15 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:03:23 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:03:29 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:03:33 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:03:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:03:53 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx[22m
+[2m11:04:01 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m11:04:16 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:04:23 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/roster/ImportReviewTable.tsx[22m
+[2m11:04:35 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m11:04:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m11:05:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m11:08:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:17:43 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:17:48 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:17:53 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:19:30 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:19:36 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:19:39 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:19:49 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:20:03 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:20:10 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:21:16 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:21:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:32:26 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:32:31 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:32:38 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m4:32:41 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:35:01 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:35:14 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:35:20 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:35:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:38:43 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:38:53 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:39:19 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:39:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:43:00 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/MatchScreenshotImportSession.tsx[22m
+[2m4:43:30 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:43:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:43:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:44:09 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:44:17 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:44:21 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:44:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:44:36 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:52:46 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:52:52 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:52:57 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:53:06 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:53:24 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:58:05 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m4:58:17 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m4:58:39 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m4:58:46 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m5:03:58 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m5:04:13 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m5:06:52 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m5:08:15 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m5:08:31 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:08:42 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:08:50 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:09:02 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m5:30:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx[22m
+[2m5:30:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx[22m
+[2m5:30:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx[22m
+[2m5:31:08 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx[22m
+[2m5:32:20 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx[22m
+[2m5:33:19 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx[22m
+[2m5:34:05 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx[22m
+[2m5:39:36 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx[22m
+[2m5:42:55 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m5:43:53 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m5:44:00 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m5:44:17 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m5:44:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m5:44:44 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m5:44:58 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m5:46:17 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:46:26 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:46:44 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:47:27 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:48:26 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:48:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:50:36 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:50:48 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m5:51:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:31:14 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/roster/ImportReviewTable.tsx[22m
+[2m9:31:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m9:31:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:32:19 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:33:40 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/MatchScreenshotImportSession.tsx[22m
+[2m9:34:36 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/MatchScreenshotImportSession.tsx[22m
+[2m9:34:50 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:35:06 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:35:13 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:35:32 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:35:46 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:35:58 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:36:13 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:36:35 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:36:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx[22m
+[2m9:37:33 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m9:37:52 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m9:38:13 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m9:38:26 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataDashboard.tsx[22m
+[2m9:38:46 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx[22m
+[2m9:39:03 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m9:42:53 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/guild/MemberDataDashboard.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx, /src/features/guild/MemberDataTable.tsx, /src/features/guild/MemberDataToolbar.tsx[22m
+[2m9:50:16 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx[22m
+[2m9:50:33 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m9:53:19 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/settings/SettingsPage.tsx, /src/features/guild/MemberDataDashboard.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx, /src/features/guild/MemberDataTable.tsx, /src/features/guild/MemberDataToolbar.tsx[22m
+[2m9:54:01 AM[22m [36m[1m[vite][22m[39m [32mvite.config.ts changed, restarting server...[39m
+[2m9:54:01 AM[22m [36m[1m[vite][22m[39m server restarted.
+[2m10:04:12 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/board/BoardCanvas.tsx[22m
+[2m10:05:29 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/settings/SettingsPage.tsx[22m
+[2m10:05:49 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m10:06:55 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/guild/MemberDataDashboard.tsx, /src/features/guild/MemberDataToolbar.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx, /src/features/guild/MemberDataTable.tsx[22m
+[2m10:13:31 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m10:13:39 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m10:14:39 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx[22m
+[2m10:15:08 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m10:15:28 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m10:15:47 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m10:17:13 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/settings/SettingsPage.tsx[22m
+[2m10:17:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m10:20:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/guild/MemberDataDashboard.tsx, /src/features/guild/MemberDataToolbar.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx, /src/features/guild/MemberDataTable.tsx[22m
+[2m10:44:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/settings/SettingsPage.tsx[22m
+[2m10:44:51 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m10:55:33 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx[22m
+[2m10:55:38 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx[22m
+[2m10:58:14 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/InspectorPanel.tsx, /src/features/board/BoardCanvas.tsx[22m
+[2m11:11:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/board/BoardCanvas.tsx[22m
+[2m11:14:27 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx[22m
+[2m11:14:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx[22m
+[2m11:15:27 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m11:15:47 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/app/App.tsx[22m
+[2m11:16:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/app/App.tsx[22m
+[2m11:19:12 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/board/BoardCanvas.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/guild/MemberDataDashboard.tsx, /src/features/guild/MemberDataToolbar.tsx, /src/features/board/BoardToolbar.tsx, /src/features/roster/ImportReviewTable.tsx, /src/features/guild/MemberDataTable.tsx, /src/features/board/BoardSnapshotPreview.tsx[22m
+[2m11:41:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m11:45:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m11:45:38 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/ImportAuditMeta.tsx[22m
+[2m11:45:48 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/ImportAuditMeta.tsx[22m
+[2m11:46:19 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m11:46:38 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataPage.tsx[22m
+[2m12:27:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/board/BoardCanvas.tsx[22m
+[2m12:49:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m12:49:28 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/RosterPanel.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataDashboard.tsx[22m
+[2m12:51:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/board/BoardCanvas.tsx[22m
+[2m1:15:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/RosterPanel.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataDashboard.tsx[22m
+[2m1:15:31 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataTable.tsx[22m
+[2m2:31:41 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/RosterPanel.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataDashboard.tsx[22m
+[2m2:32:05 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataTable.tsx[22m
+[2m2:32:12 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/InspectorPanel.tsx[22m
+[2m2:32:18 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m2:32:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m2:32:54 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m2:38:18 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/RosterPanel.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataDashboard.tsx[22m
+[2m2:38:28 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/guild/MemberDataTable.tsx[22m
+[2m2:38:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/InspectorPanel.tsx[22m
+[2m2:38:44 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/strategy/TopBar.tsx, /src/features/guild/MemberDataPage.tsx[22m
+[2m2:38:54 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/ImportReviewTable.tsx[22m
+[2m2:39:16 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/roster/RosterPanel.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/features/board/BoardCanvas.tsx[22m
+[2m2:39:25 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/roster/RosterPanel.tsx, /src/features/strategy/InspectorPanel.tsx, /src/features/guild/MemberDataPage.tsx, /src/app/App.tsx, /src/features/settings/SettingsPage.tsx, /src/features/strategy/TopBar.tsx, /src/features/strategy/PhaseTabs.tsx, /src/features/board/BoardCanvas.tsx, /src/features/guild/MemberDataDashboard.tsx[22m

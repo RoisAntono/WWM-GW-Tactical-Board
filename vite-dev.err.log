@@ -1,0 +1,1079 @@
+[2m4:44:09 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "parseMatchTime"
+[0m [90m 941 |[31m }
+ [90m 942 |[31m
+[31m[1m>[22m[31m[90m 943 |[31m [36mfunction[31m parseMatchTime(value[33m?[31m[33m:[31m string)[33m:[31m { date[33m:[31m string[33m;[31m time[33m?[31m[33m:[31m string[33m;[31m display[33m:[31m string } [33m|[31m undefined {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 944 |[31m   [36mconst[31m trimmed [33m=[31m value[33m?[31m[33m.[31mtrim()[33m;[31m
+ [90m 945 |[31m   [36mif[31m ([33m![31mtrimmed) {
+ [90m 946 |[31m     [36mreturn[31m undefined[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m4:44:18 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "parseMatchTime"
+[0m [90m 944 |[31m }
+ [90m 945 |[31m
+[31m[1m>[22m[31m[90m 946 |[31m [36mfunction[31m parseMatchTime(value[33m?[31m[33m:[31m string)[33m:[31m { date[33m:[31m string[33m;[31m time[33m?[31m[33m:[31m string[33m;[31m display[33m:[31m string } [33m|[31m undefined {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 947 |[31m   [36mconst[31m trimmed [33m=[31m value[33m?[31m[33m.[31mtrim()[33m;[31m
+ [90m 948 |[31m   [36mif[31m ([33m![31mtrimmed) {
+ [90m 949 |[31m     [36mreturn[31m undefined[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m4:44:21 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "parseMatchTime"
+[0m [90m 945 |[31m }
+ [90m 946 |[31m
+[31m[1m>[22m[31m[90m 947 |[31m [36mfunction[31m parseMatchTime(value[33m?[31m[33m:[31m string)[33m:[31m { date[33m:[31m string[33m;[31m time[33m?[31m[33m:[31m string[33m;[31m display[33m:[31m string } [33m|[31m undefined {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 948 |[31m   [36mconst[31m trimmed [33m=[31m value[33m?[31m[33m.[31mtrim()[33m;[31m
+ [90m 949 |[31m   [36mif[31m ([33m![31mtrimmed) {
+ [90m 950 |[31m     [36mreturn[31m undefined[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m4:44:25 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "parseMatchTime"
+[0m [90m 945 |[31m }
+ [90m 946 |[31m
+[31m[1m>[22m[31m[90m 947 |[31m [36mfunction[31m parseMatchTime(value[33m?[31m[33m:[31m string)[33m:[31m { date[33m:[31m string[33m;[31m time[33m?[31m[33m:[31m string[33m;[31m display[33m:[31m string } [33m|[31m undefined {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 948 |[31m   [36mconst[31m trimmed [33m=[31m value[33m?[31m[33m.[31mtrim()[33m;[31m
+ [90m 949 |[31m   [36mif[31m ([33m![31mtrimmed) {
+ [90m 950 |[31m     [36mreturn[31m undefined[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:42:56 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+      at failureErrorWithLog (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1748:15)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1017:50
+      at responseCallbacks.<computed> (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:884:9)
+      at handleIncomingPacket (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:939:12)
+      at Socket.readFromStdout (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:862:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:43:53 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+      at failureErrorWithLog (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1748:15)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1017:50
+      at responseCallbacks.<computed> (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:884:9)
+      at handleIncomingPacket (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:939:12)
+      at Socket.readFromStdout (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:862:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:00 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+      at failureErrorWithLog (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1748:15)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1017:50
+      at responseCallbacks.<computed> (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:884:9)
+      at handleIncomingPacket (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:939:12)
+      at Socket.readFromStdout (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:862:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+      at failureErrorWithLog (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1748:15)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1017:50
+      at responseCallbacks.<computed> (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:884:9)
+      at handleIncomingPacket (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:939:12)
+      at Socket.readFromStdout (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:862:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m5:44:17 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+      at failureErrorWithLog (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1748:15)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:1017:50
+      at responseCallbacks.<computed> (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:884:9)
+      at handleIncomingPacket (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:939:12)
+      at Socket.readFromStdout (C:\Users\ROIS\Documents\node\GWWM\node_modules\esbuild\lib\main.js:862:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m5:44:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/ROIS/Documents/node/GWWM/src/app/store.ts:832:16: ERROR: Multiple exports with the same name "normalizePersistedState"
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/app/store.ts[39m:832:16
+[33m  
+  [33mMultiple exports with the same name "normalizePersistedState"[33m
+  830 |  >;
+  831 |  
+  832 |  export function normalizePersistedState(state: Partial<PlanStore>): HydratedPlanState {
+      |                  ^
+  833 |    const plan = sanitizeTacticalPlan(state.plan ?? createDefaultPlan());
+  834 |    const { plan: linkedPlan, guild } = ensureGuildForPlan(plan, state.guild);
+  [39m
+[2m5:46:17 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "compareMemberStats"
+[0m [90m 856 |[31m }
+ [90m 857 |[31m
+[31m[1m>[22m[31m[90m 858 |[31m [36mfunction[31m compareMemberStats(a[33m:[31m [33mGuildMemberStats[31m[33m,[31m b[33m:[31m [33mGuildMemberStats[31m[33m,[31m sortKey[33m:[31m [33mSortKey[31m)[33m:[31m number {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 859 |[31m   [36mif[31m (sortKey [33m===[31m [32m'ign'[31m) {
+ [90m 860 |[31m     [36mreturn[31m a[33m.[31mmember[33m.[31mign[33m.[31mlocaleCompare(b[33m.[31mmember[33m.[31mign)[33m;[31m
+ [90m 861 |[31m   }[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m5:46:26 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "compareMemberStats"
+[0m [90m 850 |[31m }
+ [90m 851 |[31m
+[31m[1m>[22m[31m[90m 852 |[31m [36mfunction[31m compareMemberStats(a[33m:[31m [33mGuildMemberStats[31m[33m,[31m b[33m:[31m [33mGuildMemberStats[31m[33m,[31m sortKey[33m:[31m [33mSortKey[31m)[33m:[31m number {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 853 |[31m   [36mif[31m (sortKey [33m===[31m [32m'ign'[31m) {
+ [90m 854 |[31m     [36mreturn[31m a[33m.[31mmember[33m.[31mign[33m.[31mlocaleCompare(b[33m.[31mmember[33m.[31mign)[33m;[31m
+ [90m 855 |[31m   }[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m5:46:45 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "compareMemberStats"
+[0m [90m 801 |[31m }
+ [90m 802 |[31m
+[31m[1m>[22m[31m[90m 803 |[31m [36mfunction[31m compareMemberStats(a[33m:[31m [33mGuildMemberStats[31m[33m,[31m b[33m:[31m [33mGuildMemberStats[31m[33m,[31m sortKey[33m:[31m [33mSortKey[31m)[33m:[31m number {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 804 |[31m   [36mif[31m (sortKey [33m===[31m [32m'ign'[31m) {
+ [90m 805 |[31m     [36mreturn[31m a[33m.[31mmember[33m.[31mign[33m.[31mlocaleCompare(b[33m.[31mmember[33m.[31mign)[33m;[31m
+ [90m 806 |[31m   }[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m5:48:26 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Duplicate declaration "screenshotFileKey"
+[0m [90m 689 |[31m }
+ [90m 690 |[31m
+[31m[1m>[22m[31m[90m 691 |[31m [36mfunction[31m screenshotFileKey(file[33m:[31m [33mFile[31m)[33m:[31m string {
+ [90m     |[31m          [31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m[31m[1m^[22m[31m
+ [90m 692 |[31m   [36mreturn[31m [32m`${file.name}:${file.size}:${file.lastModified}`[31m[33m;[31m
+ [90m 693 |[31m }
+ [90m 694 |[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m
+      at File.buildCodeFrameError (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:189:12)
+      at Scope.checkBlockScopedCollisions (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:433:27)
+      at Scope.registerBinding (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:530:16)
+      at Scope.registerDeclaration (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:475:12)
+      at Object.BlockScoped (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:276:12)
+      at Object.newFn (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\visitors.js:203:17)
+      at NodePath._call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:50:20)
+      at NodePath.call (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:40:18)
+      at NodePath.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:87:31)
+      at TraversalContext.visitQueue (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:96:16)
+      at TraversalContext.visitMultiple (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:68:17)
+      at TraversalContext.visit (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\context.js:117:19)
+      at traverseNode (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\traverse-node.js:130:17)
+      at traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\index.js:53:34)
+      at NodePath.traverse (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\index.js:120:24)
+      at Scope.crawl (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:695:10)
+      at Scope.init (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\scope\index.js:661:12)
+      at NodePath.setScope (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:139:55)
+      at NodePath.setContext (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\traverse\lib\path\context.js:151:12)
+      at new File (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\file\file.js:80:8)
+      at normalizeFile (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\normalize-file.js:96:10)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:261:32)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:189:28
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:113:33
+      at step (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:287:14)
+      at C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\ROIS\Documents\node\GWWM\node_modules\gensync\index.js:223:11)
+[2m9:36:35 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./ImportAuditMeta" from "src/features/guild/MemberDataPage.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ROIS/Documents/node/GWWM/src/features/guild/MemberDataPage.tsx[39m:36:32
+[33m  35 |  } from "./memberDataImportUtils";
+  36 |  import { compareMemberStats } from "./memberDataSorting";
+  37 |  import { ImportAuditMeta } from "./ImportAuditMeta";
+     |                                   ^
+  38 |  import { MatchScreenshotImportSession } from "../roster/MatchScreenshotImportSession";
+  39 |  import { ImportReviewTable } from "../roster/ImportReviewTable";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:29003:43)
+      at TransformPluginContext.error (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:29000:14)
+      at normalizeUrl (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:27123:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:27181:32
+      at async Promise.all (index 17)
+      at async TransformPluginContext.transform (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:27149:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:28801:14)
+      at async loadAndTransform (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:22670:26)
+      at async viteTransformMiddleware (file:///C:/Users/ROIS/Documents/node/GWWM/node_modules/vite/dist/node/chunks/config.js:24546:20)
