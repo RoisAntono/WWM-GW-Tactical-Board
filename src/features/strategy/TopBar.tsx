@@ -16,6 +16,7 @@ import {
 import { ChangeEvent, RefObject, useRef, useState } from 'react';
 import { createPlanImportReport, createWorkspaceImportReport, type BackupCompatibilityReport } from '../../app/backupCompatibility';
 import { usePlanStore } from '../../app/store';
+import { createWorkspaceShortShareUrl } from '../../app/workspaceShortShare';
 import { buildWorkspaceShareUrl, createWorkspaceShareHash, createWorkspaceSharePayload } from '../../app/workspaceShareLink';
 import { parseWorkspaceBackup, serializeWorkspaceBackup } from '../../app/workspaceSerialization';
 import { ConfirmDialog } from '../../shared/ConfirmDialog';
@@ -40,6 +41,7 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
   const [shareError, setShareError] = useState('');
+  const [shareNotice, setShareNotice] = useState('');
   const [shareLoading, setShareLoading] = useState(false);
   const { plan, guild, activePhaseId, briefingMode, historyPast, historyFuture, undo, redo, setPlan, setWorkspaceBackup, setPlanMeta, resetPlan, setBriefingMode } =
     usePlanStore();
@@ -72,12 +74,23 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
     setShareDialogOpen(true);
     setShareUrl('');
     setShareError('');
+    setShareNotice('');
     setShareLoading(true);
 
     try {
       const payload = createWorkspaceSharePayload(plan, guild, activePhaseId);
-      const hash = await createWorkspaceShareHash(payload);
-      setShareUrl(buildWorkspaceShareUrl(hash, window.location.href));
+      try {
+        setShareUrl(await createWorkspaceShortShareUrl(payload, window.location.href));
+        setShareNotice('Short link created. Encrypted snapshot was stored through /api/share.');
+      } catch (error) {
+        const hash = await createWorkspaceShareHash(payload);
+        setShareUrl(buildWorkspaceShareUrl(hash, window.location.href));
+        setShareNotice(
+          `Short-link API unavailable, using long encrypted URL instead. ${
+            error instanceof Error ? error.message : 'Run npm run dev:vercel to test Neon locally.'
+          }`,
+        );
+      }
     } catch (error) {
       setShareError(error instanceof Error ? error.message : 'Unable to create encrypted share link.');
     } finally {
@@ -202,6 +215,7 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
         shareUrl={shareUrl}
         loading={shareLoading}
         error={shareError}
+        notice={shareNotice}
         onClose={() => setShareDialogOpen(false)}
       />
     </>

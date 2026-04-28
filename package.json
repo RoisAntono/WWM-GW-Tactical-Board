@@ -6,6 +6,7 @@
   "scripts": {
     "assets:map": "node scripts/optimize-map.mjs",
     "dev": "vite --host 0.0.0.0",
+    "dev:vercel": "npx --yes vercel dev",
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
     "test:e2e": "playwright test",
@@ -13,6 +14,7 @@
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@vitejs/plugin-react": "^5.0.4",
     "konva": "^10.0.12",
     "lucide-react": "^0.468.0",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
     "@types/papaparse": "^5.3.16",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

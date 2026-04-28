@@ -2,6 +2,7 @@ import { X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePlanStore } from './store';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
+import { openWorkspaceShortShare, readWorkspaceShortShareId } from './workspaceShortShare';
 import { decryptWorkspaceShareHash, hasWorkspaceShareHash, type WorkspaceSharePayload } from './workspaceShareLink';
 import { BoardCanvas, type BoardCanvasHandle } from '../features/board/BoardCanvas';
 import { MemberDataPage } from '../features/guild/MemberDataPage';
@@ -34,14 +35,18 @@ export function App() {
     let cancelled = false;
 
     const openSharedWorkspace = async () => {
-      if (!hasWorkspaceShareHash(window.location.hash)) {
+      const hasLongShare = hasWorkspaceShareHash(window.location.hash);
+      const shortShareId = readWorkspaceShortShareId(window.location.pathname);
+      if (!hasLongShare && !shortShareId) {
         setSharePreview(undefined);
         return;
       }
 
       setSharePreview({ status: 'loading' });
       try {
-        const payload = await decryptWorkspaceShareHash(window.location.hash);
+        const payload = shortShareId
+          ? await openWorkspaceShortShare(window.location)
+          : await decryptWorkspaceShareHash(window.location.hash);
         if (!cancelled) {
           setSharePreview({ status: 'ready', payload });
           changeView('board');
@@ -198,7 +203,8 @@ function isEditableTarget(target: EventTarget | null): boolean {
 }
 
 function clearWorkspaceShareHash(): void {
-  if (hasWorkspaceShareHash(window.location.hash)) {
-    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+  if (hasWorkspaceShareHash(window.location.hash) || readWorkspaceShortShareId(window.location.pathname)) {
+    const pathname = readWorkspaceShortShareId(window.location.pathname) ? '/' : window.location.pathname;
+    window.history.replaceState(null, '', `${pathname}${window.location.search}`);
   }
 }

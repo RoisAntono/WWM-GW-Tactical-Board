@@ -38,6 +38,58 @@ The workspace is split into two main parts:
 
 Local settings, including the Gemini API key, are not included in workspace backups or encrypted share links.
 
+## Optional Server Storage
+
+The app is local-first, but the repository includes a modular database structure for future short encrypted share links:
+
+```text
+database/
+  neon/
+    migrations/
+    README.md
+src/server/
+  share/
+  database/
+    neon/
+```
+
+The intended rule is simple: feature code depends on the provider-neutral `ShareSnapshotStore` interface, while vendor-specific schema and adapters stay under their own provider folders. If the project later moves from Neon to another provider, add a new `database/<provider>/` folder and a matching `src/server/database/<provider>/` adapter.
+
+### Neon Short Share Setup
+
+Short encrypted share links use the Vercel API route at `/api/share` and store only encrypted snapshot data in Neon.
+
+1. Create a Neon project.
+2. Copy the connection string into local `.env` for development:
+
+```text
+NEON_DATABASE_URL=postgresql://...
+SHARE_STORAGE_PROVIDER=neon
+```
+
+3. Run the migration SQL in the Neon SQL Editor:
+
+```text
+database/neon/migrations/001_create_share_snapshots.sql
+```
+
+4. Add the same environment variables in Vercel Project Settings:
+
+```text
+NEON_DATABASE_URL=postgresql://...
+SHARE_STORAGE_PROVIDER=neon
+```
+
+5. Deploy to Vercel.
+
+For local API testing, use Vercel's local runtime:
+
+```bash
+npm run dev:vercel
+```
+
+`npm run dev` starts only the Vite frontend, so short-link API calls will fall back to the long encrypted URL during local frontend-only development.
+
 ## Privacy And Storage
 
 This project is local-first:
@@ -48,6 +100,7 @@ This project is local-first:
 - Raw screenshots are not stored in backups or import history.
 - The Gemini API key is stored only in the current browser.
 - Encrypted share links include the decrypt key in the URL hash so anyone with the link can open the snapshot.
+- Short share links store only encrypted ciphertext in Neon. The decrypt key remains in the URL hash.
 
 Encrypted share links are snapshots, not live sync.
 
@@ -161,10 +214,13 @@ Keep that file updated when adding major features, changing architecture, or lea
 
 ```text
 Assets/                 Source and generated map assets
+database/               Provider-specific database schemas and migrations
 docs/                   Project plan and audit notes
 scripts/                Utility scripts
+api/                    Vercel API routes for optional server-side features
 src/app/                Store, data layer, persistence, share link helpers
 src/features/           Board, guild/member data, roster import, strategy UI
+src/server/             Provider-neutral server contracts and database adapters
 src/shared/             Shared constants, formatting, dialogs, helpers
 src/styles/             Global styles
 src/types/              Domain types

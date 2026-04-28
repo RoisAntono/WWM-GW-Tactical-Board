@@ -7,10 +7,11 @@ type WorkspaceShareDialogProps = {
   shareUrl: string;
   loading: boolean;
   error: string;
+  notice: string;
   onClose: () => void;
 };
 
-export function WorkspaceShareDialog({ open, shareUrl, loading, error, onClose }: WorkspaceShareDialogProps) {
+export function WorkspaceShareDialog({ open, shareUrl, loading, error, notice, onClose }: WorkspaceShareDialogProps) {
   const titleId = useId();
   const [copyStatus, setCopyStatus] = useState('');
 
@@ -56,6 +57,7 @@ export function WorkspaceShareDialog({ open, shareUrl, loading, error, onClose }
         </div>
 
         {loading ? <p className="share-status">Creating encrypted link...</p> : null}
+        {notice ? <p className="share-status">{notice}</p> : null}
         {error ? <p className="share-error">{error}</p> : null}
 
         <label className="share-url-field">

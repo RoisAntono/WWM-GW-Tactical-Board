@@ -3,9 +3,13 @@ import { defaultPlanTeams } from '../shared/constants';
 import type { GuildDatabase, TacticalPlan } from '../types/domain';
 import {
   buildWorkspaceShareUrl,
+  createWorkspaceShareEncryptedSnapshot,
   createWorkspaceShareHash,
+  createWorkspaceShareKeyHash,
   createWorkspaceSharePayload,
+  decryptWorkspaceShareStoredSnapshot,
   decryptWorkspaceShareHash,
+  readWorkspaceShareKeyHash,
   hasWorkspaceShareHash,
   readWorkspaceShareToken,
   WorkspaceShareLinkError,
@@ -46,6 +50,26 @@ describe('workspace share links', () => {
     expect(url).toContain('https://example.test/app?room=1#wwm-share=');
     expect(hasWorkspaceShareHash(new URL(url).hash)).toBe(true);
     expect(readWorkspaceShareToken(new URL(url).hash)).toBe(hash.replace('#wwm-share=', ''));
+  });
+
+  it('decrypts a stored short-link snapshot with the key kept in the URL hash', async () => {
+    const payload = createWorkspaceSharePayload(planFixture(), guildFixture(), 'phase-battle', '2026-04-28T00:00:00.000Z');
+    const encrypted = await createWorkspaceShareEncryptedSnapshot(payload, { compression: 'n' });
+    const hash = createWorkspaceShareKeyHash(encrypted);
+    const decrypted = await decryptWorkspaceShareStoredSnapshot(
+      {
+        version: 1,
+        compression: encrypted.compression,
+        iv: encrypted.iv,
+        ciphertext: encrypted.ciphertext,
+      },
+      hash,
+    );
+
+    expect(hash).toMatch(/^#wwm-share-key=v1\.n\./);
+    expect(readWorkspaceShareKeyHash(hash)).toMatchObject({ version: 1, compression: 'n' });
+    expect(decrypted.plan.title).toBe('Shared Plan');
+    expect(decrypted.activePhaseId).toBe('phase-battle');
   });
 
   it('rejects unsupported or corrupt hashes', async () => {

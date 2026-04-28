@@ -7,6 +7,16 @@ export type WorkspaceSharePayload = WorkspaceSnapshot & {
 
 export type WorkspaceShareCompression = 'g' | 'n';
 
+export type WorkspaceShareEncryptedSnapshot = {
+  version: 1;
+  compression: WorkspaceShareCompression;
+  key: string;
+  iv: string;
+  ciphertext: string;
+};
+
+export type WorkspaceShareStoredSnapshot = Omit<WorkspaceShareEncryptedSnapshot, 'key'>;
+
 type ShareHashParts = {
   compression: WorkspaceShareCompression;
   key: Uint8Array;
@@ -15,6 +25,7 @@ type ShareHashParts = {
 };
 
 const shareHashKey = 'wwm-share';
+const shareKeyHashKey = 'wwm-share-key';
 const shareVersion = 'v1';
 const encryptionAlgorithm = 'AES-GCM';
 const keyLengthBytes = 32;
@@ -46,6 +57,14 @@ export async function createWorkspaceShareHash(
   payload: WorkspaceSharePayload,
   options: { compression?: WorkspaceShareCompression } = {},
 ): Promise<string> {
+  const encrypted = await createWorkspaceShareEncryptedSnapshot(payload, options);
+  return createWorkspaceShareHashFromSnapshot(encrypted);
+}
+
+export async function createWorkspaceShareEncryptedSnapshot(
+  payload: WorkspaceSharePayload,
+  options: { compression?: WorkspaceShareCompression } = {},
+): Promise<WorkspaceShareEncryptedSnapshot> {
   const cryptoApi = getCryptoApi();
   const encodedPayload = textToBytes(JSON.stringify(toSerializableSharePayload(payload)));
   const compression = options.compression ?? (supportsCompressionStream() ? 'g' : 'n');
@@ -57,13 +76,21 @@ export async function createWorkspaceShareHash(
     await cryptoApi.subtle.encrypt({ name: encryptionAlgorithm, iv: toArrayBuffer(iv) }, cryptoKey, toArrayBuffer(plaintext)),
   );
 
-  return `#${shareHashKey}=${[
-    shareVersion,
+  return {
+    version: 1,
     compression,
-    bytesToBase64Url(key),
-    bytesToBase64Url(iv),
-    bytesToBase64Url(ciphertext),
-  ].join('.')}`;
+    key: bytesToBase64Url(key),
+    iv: bytesToBase64Url(iv),
+    ciphertext: bytesToBase64Url(ciphertext),
+  };
+}
+
+export function createWorkspaceShareHashFromSnapshot(snapshot: WorkspaceShareEncryptedSnapshot): string {
+  return `#${shareHashKey}=${[shareVersion, snapshot.compression, snapshot.key, snapshot.iv, snapshot.ciphertext].join('.')}`;
+}
+
+export function createWorkspaceShareKeyHash(snapshot: Pick<WorkspaceShareEncryptedSnapshot, 'compression' | 'key'>): string {
+  return `#${shareKeyHashKey}=${[shareVersion, snapshot.compression, snapshot.key].join('.')}`;
 }
 
 function toSerializableSharePayload(payload: WorkspaceSharePayload): WorkspaceSharePayload {
@@ -104,14 +131,64 @@ export async function decryptWorkspaceShareHash(hash: string): Promise<Workspace
   }
 }
 
+export async function decryptWorkspaceShareStoredSnapshot(
+  snapshot: WorkspaceShareStoredSnapshot,
+  hash: string,
+): Promise<WorkspaceSharePayload> {
+  const keyParts = readWorkspaceShareKeyHash(hash);
+  if (!keyParts) {
+    throw new WorkspaceShareLinkError('The short share link is missing its decryption key.');
+  }
+  if (snapshot.version !== 1 || keyParts.version !== 1 || snapshot.compression !== keyParts.compression) {
+    throw new WorkspaceShareLinkError('The short share link format is not supported.');
+  }
+
+  const parts: ShareHashParts = {
+    compression: snapshot.compression,
+    key: base64UrlToBytes(keyParts.key),
+    iv: base64UrlToBytes(snapshot.iv),
+    ciphertext: base64UrlToBytes(snapshot.ciphertext),
+  };
+  return decryptWorkspaceShareParts(parts);
+}
+
 export function readWorkspaceShareToken(hash: string): string | undefined {
   const trimmedHash = hash.startsWith('#') ? hash.slice(1) : hash;
   const params = new URLSearchParams(trimmedHash);
   return params.get(shareHashKey)?.trim() || undefined;
 }
 
+export function readWorkspaceShareKeyHash(
+  hash: string,
+): { version: 1; compression: WorkspaceShareCompression; key: string } | undefined {
+  const trimmedHash = hash.startsWith('#') ? hash.slice(1) : hash;
+  const params = new URLSearchParams(trimmedHash);
+  const token = params.get(shareKeyHashKey)?.trim();
+  if (!token) {
+    return undefined;
+  }
+
+  const parts = token.split('.');
+  if (parts.length !== 3 || parts[0] !== shareVersion) {
+    throw new WorkspaceShareLinkError('The short share link format is not supported.');
+  }
+  const compression = parts[1];
+  if (compression !== 'g' && compression !== 'n') {
+    throw new WorkspaceShareLinkError('The short share compression mode is not supported.');
+  }
+  if (base64UrlToBytes(parts[2]).length !== keyLengthBytes) {
+    throw new WorkspaceShareLinkError('The short share link key is invalid.');
+  }
+
+  return { version: 1, compression, key: parts[2] };
+}
+
 export function hasWorkspaceShareHash(hash: string): boolean {
   return Boolean(readWorkspaceShareToken(hash));
+}
+
+export function hasWorkspaceShareKeyHash(hash: string): boolean {
+  return Boolean(readWorkspaceShareKeyHash(hash));
 }
 
 export function buildWorkspaceShareUrl(hash: string, href = globalThis.location?.href ?? ''): string {
@@ -140,6 +217,28 @@ function parseShareHashParts(token: string): ShareHashParts {
   }
 
   return { compression, key, iv, ciphertext };
+}
+
+async function decryptWorkspaceShareParts(parts: ShareHashParts): Promise<WorkspaceSharePayload> {
+  const cryptoApi = getCryptoApi();
+
+  try {
+    const cryptoKey = await cryptoApi.subtle.importKey('raw', toArrayBuffer(parts.key), encryptionAlgorithm, false, ['decrypt']);
+    const decrypted = new Uint8Array(
+      await cryptoApi.subtle.decrypt(
+        { name: encryptionAlgorithm, iv: toArrayBuffer(parts.iv) },
+        cryptoKey,
+        toArrayBuffer(parts.ciphertext),
+      ),
+    );
+    const payloadBytes = parts.compression === 'g' ? await gunzipBytes(decrypted) : decrypted;
+    return parseSharePayload(bytesToText(payloadBytes));
+  } catch (error) {
+    if (error instanceof WorkspaceShareLinkError) {
+      throw error;
+    }
+    throw new WorkspaceShareLinkError('The shared workspace link is invalid or has been changed.');
+  }
 }
 
 function parseSharePayload(json: string): WorkspaceSharePayload {
