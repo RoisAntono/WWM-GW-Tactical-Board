@@ -1,3 +1,6 @@
+import { neon } from '@neondatabase/serverless';
+import { randomBytes } from 'node:crypto';
+
 type ApiRequest = {
   method?: string;
   query?: Record<string, string | string[] | undefined>;
@@ -18,7 +21,26 @@ type ShareCreateBody = {
   ttlDays?: unknown;
 };
 
+type ShareSnapshotRecord = {
+  id: string;
+  ciphertext: string;
+  iv: string;
+  compression: 'gzip' | 'none';
+  createdAt: string;
+  expiresAt?: string;
+};
+
+type ShareSnapshotRow = {
+  id: string;
+  payload_ciphertext: string;
+  iv: string;
+  compression: string;
+  created_at: string | Date;
+  expires_at: string | Date | null;
+};
+
 const maxCiphertextLength = 4_000_000;
+const idPattern = /^[A-Za-z0-9_-]{8,64}$/;
 
 export default async function handler(request: ApiRequest, response: ApiResponse) {
   response.setHeader('Cache-Control', 'no-store');
@@ -56,7 +78,6 @@ async function createShare(request: ApiRequest, response: ApiResponse) {
   const ttlDays = readTtlDays(body.ttlDays);
   const now = new Date();
   const expiresAt = new Date(now.getTime() + ttlDays * 24 * 60 * 60 * 1000).toISOString();
-  const store = await createConfiguredStore();
   const ciphertext = body.ciphertext;
   const iv = body.iv;
   const compression = body.compression;
@@ -64,7 +85,7 @@ async function createShare(request: ApiRequest, response: ApiResponse) {
     response.status(400).json({ error: 'Encrypted share payload is incomplete.' });
     return;
   }
-  const record = await store.create({
+  const record = await createShareSnapshot({
     id: await createShareId(),
     ciphertext,
     iv,
@@ -85,9 +106,12 @@ async function readShare(request: ApiRequest, response: ApiResponse) {
     response.status(400).json({ error: 'Share id is required.' });
     return;
   }
+  if (!idPattern.test(id)) {
+    response.status(404).json({ error: 'Share link was not found or has expired.' });
+    return;
+  }
 
-  const store = await createConfiguredStore();
-  const record = await store.findById(id);
+  const record = await findShareSnapshot(id);
   if (!record) {
     response.status(404).json({ error: 'Share link was not found or has expired.' });
     return;
@@ -103,26 +127,15 @@ async function readShare(request: ApiRequest, response: ApiResponse) {
   });
 }
 
-async function createConfiguredStore() {
-  const databaseUrl = process.env.NEON_DATABASE_URL;
-  if (!databaseUrl) {
-    throw new Error('NEON_DATABASE_URL is not configured.');
+function readCreateBody(body: unknown): ShareCreateBody {
+  if (typeof body === 'string') {
+    try {
+      return readCreateBody(JSON.parse(body) as unknown);
+    } catch {
+      return { ciphertext: undefined, iv: undefined, compression: undefined, ttlDays: undefined };
+    }
   }
 
-  const [{ createShareSnapshotStore }, { createNeonSqlExecutor }] = await Promise.all([
-    import('../src/server/database/index'),
-    import('../src/server/database/neon/client'),
-  ]);
-
-  return createShareSnapshotStore({
-    provider: 'neon',
-    neon: {
-      sql: createNeonSqlExecutor(databaseUrl),
-    },
-  });
-}
-
-function readCreateBody(body: unknown): ShareCreateBody {
   if (!body || typeof body !== 'object') {
     return { ciphertext: undefined, iv: undefined, compression: undefined, ttlDays: undefined };
   }
@@ -166,6 +179,105 @@ function readQueryString(query: ApiRequest['query'], key: string): string | unde
 }
 
 async function createShareId(): Promise<string> {
-  const { randomBytes } = await import('node:crypto');
   return randomBytes(12).toString('base64url');
+}
+
+async function createShareSnapshot(input: ShareSnapshotRecord): Promise<ShareSnapshotRecord> {
+  if (!idPattern.test(input.id)) {
+    throw new Error('Share snapshot id must be 8-64 URL-safe characters.');
+  }
+
+  const rows = await queryNeon<ShareSnapshotRow>(
+    `
+      insert into share_snapshots (
+        id,
+        payload_ciphertext,
+        iv,
+        compression,
+        created_at,
+        expires_at
+      )
+      values ($1, $2, $3, $4, $5, $6)
+      returning
+        id,
+        payload_ciphertext,
+        iv,
+        compression,
+        created_at,
+        expires_at
+    `,
+    [input.id, input.ciphertext, input.iv, input.compression, input.createdAt, input.expiresAt ?? null],
+  );
+
+  const row = rows[0];
+  if (!row) {
+    throw new Error('Share snapshot was not created.');
+  }
+
+  return rowToRecord(row);
+}
+
+async function findShareSnapshot(id: string): Promise<ShareSnapshotRecord | undefined> {
+  const now = new Date().toISOString();
+  const rows = await queryNeon<ShareSnapshotRow>(
+    `
+      select
+        id,
+        payload_ciphertext,
+        iv,
+        compression,
+        created_at,
+        expires_at
+      from share_snapshots
+      where id = $1
+        and (expires_at is null or expires_at > $2)
+      limit 1
+    `,
+    [id, now],
+  );
+  const row = rows[0];
+  if (!row) {
+    return undefined;
+  }
+
+  await queryNeon(
+    `
+      update share_snapshots
+      set opened_at = $2,
+          open_count = open_count + 1
+      where id = $1
+    `,
+    [id, now],
+  );
+
+  return rowToRecord(row);
+}
+
+async function queryNeon<Row extends Record<string, unknown>>(
+  query: string,
+  params: readonly unknown[] = [],
+): Promise<readonly Row[]> {
+  const databaseUrl = process.env.NEON_DATABASE_URL;
+  if (!databaseUrl) {
+    throw new Error('NEON_DATABASE_URL is not configured.');
+  }
+
+  const sql = neon(databaseUrl);
+  const rows = await sql.query(query, [...params]);
+  return rows as readonly Row[];
+}
+
+function rowToRecord(row: ShareSnapshotRow): ShareSnapshotRecord {
+  return {
+    id: row.id,
+    ciphertext: row.payload_ciphertext,
+    iv: row.iv,
+    compression: row.compression === 'none' ? 'none' : 'gzip',
+    createdAt: toIsoString(row.created_at),
+    expiresAt: row.expires_at ? toIsoString(row.expires_at) : undefined,
+  };
+}
+
+function toIsoString(value: string | Date): string {
+  return value instanceof Date ? value.toISOString() : value;
 }

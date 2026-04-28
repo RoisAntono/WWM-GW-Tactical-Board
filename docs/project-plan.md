@@ -9,7 +9,7 @@ This file is the persistent project plan. Any future architecture plan, audit re
 - Current Phase: Encrypted URL Share Link Snapshot
 - Current Status: Completed
 - Next Action: No scheduled phase remains in the current plan; remaining work is deeper product-specific hardening.
-- Last Verified: 2026-04-28, Vercel API explicit module imports verified with `npm run test -- workspaceShortShare workspaceShareLink neonShareSnapshotStore`, `npx tsc --noEmit`, and `npm run build`.
+- Last Verified: 2026-04-28, Vercel API share endpoint made self-contained after production module-resolution failures, then verified with `npm run test -- workspaceShortShare workspaceShareLink neonShareSnapshotStore`, `npx tsc --noEmit`, and `npm run build`.
 
 ## Current Direction
 
@@ -79,10 +79,11 @@ This file is the persistent project plan. Any future architecture plan, audit re
   - Neon schema and setup notes live under `database/neon/`,
   - server-side share storage contracts live under `src/server/share/`,
   - runtime database adapters live under `src/server/database/<provider>/`,
-  - Vercel API route `/api/share` stores and reads encrypted short-link snapshots through the provider-neutral store,
+  - Vercel API route `/api/share` stores and reads encrypted short-link snapshots with the same schema as the provider-neutral store,
   - top bar share attempts a Neon-backed short link first and falls back to the existing long encrypted URL if the API is unavailable.
   - `npm run dev:vercel` is available for local full-stack Vercel API testing; `npm run dev` remains Vite-only and will use the long URL fallback.
-  - Vercel Function imports server modules by explicit file path to avoid unsupported ESM directory imports in production.
+  - Vercel Function `/api/share` keeps the Neon insert/read path self-contained to avoid production bundling failures for local `src/server` imports.
+  - `src/server/database` remains as the provider-neutral contract/adaptor scaffold for future maintenance and migration work.
 
 ## Known Unfinished Or Weak Areas
 
