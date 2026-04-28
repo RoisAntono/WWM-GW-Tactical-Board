@@ -110,7 +110,7 @@ async function createConfiguredStore() {
   }
 
   const [{ createShareSnapshotStore }, { createNeonSqlExecutor }] = await Promise.all([
-    import('../src/server/database'),
+    import('../src/server/database/index'),
     import('../src/server/database/neon/client'),
   ]);
 

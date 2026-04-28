@@ -9,7 +9,7 @@ This file is the persistent project plan. Any future architecture plan, audit re
 - Current Phase: Encrypted URL Share Link Snapshot
 - Current Status: Completed
 - Next Action: No scheduled phase remains in the current plan; remaining work is deeper product-specific hardening.
-- Last Verified: 2026-04-28, local Vercel dev short-share fallback visibility verified with `npm run test -- workspaceShortShare workspaceShareLink` and `npx tsc --noEmit`.
+- Last Verified: 2026-04-28, Vercel API explicit module imports verified with `npm run test -- workspaceShortShare workspaceShareLink neonShareSnapshotStore`, `npx tsc --noEmit`, and `npm run build`.
 
 ## Current Direction
 
@@ -82,6 +82,7 @@ This file is the persistent project plan. Any future architecture plan, audit re
   - Vercel API route `/api/share` stores and reads encrypted short-link snapshots through the provider-neutral store,
   - top bar share attempts a Neon-backed short link first and falls back to the existing long encrypted URL if the API is unavailable.
   - `npm run dev:vercel` is available for local full-stack Vercel API testing; `npm run dev` remains Vite-only and will use the long URL fallback.
+  - Vercel Function imports server modules by explicit file path to avoid unsupported ESM directory imports in production.
 
 ## Known Unfinished Or Weak Areas
 

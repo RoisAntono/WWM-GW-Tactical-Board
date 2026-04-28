@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/s/:id",
-      "destination": "/"
-    }
-  ]
-}
