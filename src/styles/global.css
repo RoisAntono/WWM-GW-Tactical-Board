@@ -2925,7 +2925,84 @@ button:disabled {
   }
 
   .share-preview-modal {
-    grid-template-rows: auto auto auto minmax(220px, 1fr) auto;
+    grid-template-rows: auto auto minmax(190px, 0.8fr) auto auto;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-y: auto;
+    border-right: 0;
+    border-left: 0;
+    padding: calc(12px + env(safe-area-inset-top)) 10px calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .share-preview-backdrop {
+    place-items: stretch;
+    padding: 0;
+  }
+
+  .share-preview-modal .modal-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 38px;
+    align-items: start;
+  }
+
+  .share-preview-modal .modal-heading h2 {
+    font-size: 20px;
+    line-height: 1.15;
+  }
+
+  .share-preview-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: visible;
+  }
+
+  .share-preview-stat {
+    min-width: 0;
+    padding: 8px;
+  }
+
+  .share-preview-stat strong {
+    font-size: 13px;
+  }
+
+  .share-board-preview {
+    min-height: 190px;
+  }
+
+  .share-warning {
+    padding: 9px;
+    font-size: 12px;
+  }
+
+  .share-preview-modal .modal-actions {
+    position: sticky;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 0 -10px calc(-12px - env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(217, 182, 111, 0.18);
+    background:
+      linear-gradient(180deg, rgba(7, 10, 11, 0.86), rgba(7, 10, 11, 0.98)),
+      url('../../Assets/any-backgroundcard.png') center/cover;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .share-preview-modal .modal-actions .primary-button,
+  .share-preview-modal .modal-actions .secondary-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .share-preview-summary {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .share-preview-summary .share-preview-stat:nth-child(n + 4) {
+    display: none;
   }
 }
 

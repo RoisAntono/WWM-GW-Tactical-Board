@@ -216,6 +216,29 @@ test('creates encrypted share link and previews before saving copy', async ({ pa
   await expect(page.locator('.phase-tab-item.is-active').getByRole('button', { name: /02 First Rotate/ })).toBeVisible();
 });
 
+test('shared workspace preview fits mobile viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByLabel('Plan title').fill('Mobile Shared Preview');
+  await page.getByRole('button', { name: 'Share encrypted workspace link' }).click();
+
+  const shareDialog = page.getByRole('dialog', { name: 'Encrypted Share Link' });
+  await expect(shareDialog).toBeVisible();
+  const shareUrl = await shareDialog.getByLabel('Share URL').inputValue();
+
+  await page.goto(shareUrl);
+  const previewDialog = page.getByRole('dialog', { name: 'Open Shared Workspace' });
+  await expect(previewDialog).toBeVisible();
+  await expect(previewDialog.getByTestId('share-preview-stage').locator('canvas').first()).toBeVisible();
+  await expect(previewDialog.getByRole('button', { name: 'Save Copy' })).toBeVisible();
+
+  const overflowsViewport = await previewDialog.evaluate((dialog) => {
+    const rect = dialog.getBoundingClientRect();
+    return rect.width > window.innerWidth + 1 || rect.left < -1 || rect.right > window.innerWidth + 1;
+  });
+  expect(overflowsViewport).toBe(false);
+});
+
 test('shows an error for corrupt encrypted share links', async ({ page }) => {
   await page.goto('/#wwm-share=v1.n.bad!.iv.data');
 

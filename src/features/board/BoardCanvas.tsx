@@ -42,6 +42,11 @@ type TouchZoomState = {
   view: ViewState;
 };
 
+type TouchPanState = {
+  point: Coordinate;
+  view: ViewState;
+};
+
 export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(function BoardCanvas(
   { selectedObjectiveType, onObjectiveTypeChange, presentationMode = false, hideToolbar = false },
   ref,
@@ -51,6 +56,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const groupRef = useRef<Konva.Group>(null);
   const viewRef = useRef<ViewState>({ x: 0, y: 0, scale: 0.16, fitted: false });
   const touchZoomRef = useRef<TouchZoomState | undefined>(undefined);
+  const touchPanRef = useRef<TouchPanState | undefined>(undefined);
   const size = useResizeObserver(wrapperRef);
   const mapImage = useImageElement(assets.map, assets.mapFallback);
   const [hoveredMarker, setHoveredMarker] = useState<HoveredMarker>();
@@ -105,6 +111,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const hasSelection = Boolean(selectedPlayerId || selectedRouteId || selectedObjectiveId || selectedNoteId);
   const readOnly = briefingMode || presentationMode;
   const reduceCanvasEffects = shouldReduceCanvasEffects();
+  const useManualTouchPan = isCoarsePointer();
 
   const visibleObjectiveCategories = {
     ...defaultObjectiveCategoryVisibility,
@@ -176,12 +183,29 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   };
 
   const handleTouchStart = (event: KonvaEventObject<TouchEvent>) => {
+    const stage = stageRef.current;
+    const stageContainer = stage?.container();
     if (event.evt.touches.length !== 2) {
       touchZoomRef.current = undefined;
+      if (
+        event.evt.touches.length === 1 &&
+        stageContainer &&
+        useManualTouchPan &&
+        (presentationMode || (tool === 'select' && !briefingMode)) &&
+        isBoardBackgroundTarget(event.target, stage, groupRef.current)
+      ) {
+        const touchPoint = getTouchPoint(event.evt.touches[0], stageContainer);
+        event.evt.preventDefault();
+        touchPanRef.current = {
+          point: touchPoint,
+          view: viewRef.current,
+        };
+      }
       return;
     }
 
-    const touchPair = getTouchPair(event.evt.touches, stageRef.current?.container());
+    touchPanRef.current = undefined;
+    const touchPair = getTouchPair(event.evt.touches, stageContainer);
     if (!touchPair) {
       return;
     }
@@ -194,6 +218,24 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   };
 
   const handleTouchMove = (event: KonvaEventObject<TouchEvent>) => {
+    const touchPan = touchPanRef.current;
+    if (touchPan && event.evt.touches.length === 1) {
+      const stageContainer = stageRef.current?.container();
+      if (!stageContainer) {
+        return;
+      }
+
+      const touchPoint = getTouchPoint(event.evt.touches[0], stageContainer);
+      event.evt.preventDefault();
+      setView({
+        ...touchPan.view,
+        x: touchPan.view.x + touchPoint.x - touchPan.point.x,
+        y: touchPan.view.y + touchPoint.y - touchPan.point.y,
+        fitted: true,
+      });
+      return;
+    }
+
     const touchZoom = touchZoomRef.current;
     if (!touchZoom || event.evt.touches.length !== 2) {
       return;
@@ -222,6 +264,9 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const handleTouchEnd = (event: KonvaEventObject<TouchEvent>) => {
     if (event.evt.touches.length < 2) {
       touchZoomRef.current = undefined;
+    }
+    if (event.evt.touches.length === 0) {
+      touchPanRef.current = undefined;
     }
   };
 
@@ -425,7 +470,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
               y={view.y}
               scaleX={view.scale}
               scaleY={view.scale}
-              draggable={presentationMode || (tool === 'select' && !briefingMode)}
+              draggable={!useManualTouchPan && (presentationMode || (tool === 'select' && !briefingMode))}
               onClick={handleMapClick}
               onTap={handleMapClick}
               onDragEnd={(event) =>
@@ -841,4 +886,20 @@ function getTouchPair(touches: TouchList, container?: HTMLDivElement | null) {
       y: (first.y + second.y) / 2,
     },
   };
+}
+
+function getTouchPoint(touch: Touch, container: HTMLDivElement): Coordinate {
+  const rect = container.getBoundingClientRect();
+  return {
+    x: touch.clientX - rect.left,
+    y: touch.clientY - rect.top,
+  };
+}
+
+function isBoardBackgroundTarget(target: Konva.Node, stage?: Konva.Stage | null, group?: Konva.Group | null): boolean {
+  return target === stage || target === group;
+}
+
+function isCoarsePointer(): boolean {
+  return typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 }
