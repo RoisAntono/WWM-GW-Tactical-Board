@@ -173,4 +173,4 @@ tests/e2e/              Playwright smoke and visual tests
 
 ## License
 
-No license has been selected yet.
+MIT License. See [LICENSE](LICENSE).
