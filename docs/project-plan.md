@@ -9,7 +9,7 @@ This file is the persistent project plan. Any future architecture plan, audit re
 - Current Phase: Encrypted URL Share Link Snapshot
 - Current Status: Completed
 - Next Action: No scheduled phase remains in the current plan; remaining work is deeper product-specific hardening.
-- Last Verified: 2026-04-28, Vercel API share endpoint made self-contained after production module-resolution failures, then verified with `npm run test -- workspaceShortShare workspaceShareLink neonShareSnapshotStore`, `npx tsc --noEmit`, and `npm run build`.
+- Last Verified: 2026-04-28, CSV downloads fixed for Excel UTF-8 handling, then verified with `npm run test -- download`, `npx tsc --noEmit`, and `npm run build`.
 
 ## Current Direction
 
@@ -42,6 +42,7 @@ This file is the persistent project plan. Any future architecture plan, audit re
 - Member attendance and averages combine imported summary baseline data with detailed match performance rows.
 - Member averages now use per-metric denominators, so missing summary K/A data does not dilute later Match CSV defeated/assist averages.
 - Member Data table and member CSV export use `Defeated AVG` for the left game Defeated/kill column, include `Deaths AVG` for the right game Defeated/death column, and no longer show/export `Total Damage`.
+- CSV downloads include a UTF-8 BOM and charset so Chinese/Japanese/Korean IGN values open correctly in Excel on Windows.
 - OCR death column mapping is fixed so deaths can be imported.
 - Import review number inputs can stay empty instead of becoming forced `0`.
 - Import validation centralizes warnings for missing IGN, missing stats, and low confidence.
