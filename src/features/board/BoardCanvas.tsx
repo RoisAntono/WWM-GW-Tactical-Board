@@ -3,6 +3,7 @@ import { Arrow, Circle, Group, Image, Label, Layer, Line, Rect, Stage, Tag, Text
 import type Konva from 'konva';
 import type { KonvaEventObject } from 'konva/lib/Node';
 import { CircleDot, Eraser, FileText, Flag, MousePointer2, Route } from 'lucide-react';
+import { shouldReduceCanvasEffects } from '../../app/konvaPerformance';
 import { usePlanStore } from '../../app/store';
 import { assets } from '../../shared/assets';
 import { defaultObjectiveCategoryVisibility, getObjectiveCategory, objectiveAssets, objectiveLabels, roleConfigs } from '../../shared/constants';
@@ -103,6 +104,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const selectedRoute = activePhase?.routes.find((route) => route.id === selectedRouteId);
   const hasSelection = Boolean(selectedPlayerId || selectedRouteId || selectedObjectiveId || selectedNoteId);
   const readOnly = briefingMode || presentationMode;
+  const reduceCanvasEffects = shouldReduceCanvasEffects();
 
   const visibleObjectiveCategories = {
     ...defaultObjectiveCategoryVisibility,
@@ -424,6 +426,8 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
               scaleX={view.scale}
               scaleY={view.scale}
               draggable={presentationMode || (tool === 'select' && !briefingMode)}
+              onClick={handleMapClick}
+              onTap={handleMapClick}
               onDragEnd={(event) =>
                 setView((current) => ({ ...current, x: event.target.x(), y: event.target.y(), fitted: true }))
               }
@@ -435,11 +439,10 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                   width={mapSize.width}
                   height={mapSize.height}
                   opacity={0.88}
-                  onClick={handleMapClick}
-                  onTap={handleMapClick}
+                  listening={false}
                 />
               ) : (
-                <Rect width={mapSize.width} height={mapSize.height} fill="#6f7374" onClick={handleMapClick} />
+                <Rect width={mapSize.width} height={mapSize.height} fill="#6f7374" listening={false} />
               )}
 
               {layerVisibility.zones
@@ -550,8 +553,9 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                         key={marker.id}
                         marker={marker}
                         player={player}
-                        markerScale={markerScale}
-                        selected={!presentationMode && player.id === selectedPlayerId}
+                      markerScale={markerScale}
+                      reduceEffects={reduceCanvasEffects}
+                      selected={!presentationMode && player.id === selectedPlayerId}
                         briefingMode={readOnly}
                         onSelect={() => {
                           if (presentationMode) {
@@ -609,6 +613,7 @@ type PlayerDotProps = {
   marker: PlayerMarker;
   player: Player;
   markerScale: number;
+  reduceEffects: boolean;
   selected: boolean;
   briefingMode: boolean;
   onSelect: () => void;
@@ -617,7 +622,7 @@ type PlayerDotProps = {
   onRemove: () => void;
 };
 
-function PlayerDot({ marker, player, markerScale, selected, briefingMode, onSelect, onMove, onHover, onRemove }: PlayerDotProps) {
+function PlayerDot({ marker, player, markerScale, reduceEffects, selected, briefingMode, onSelect, onMove, onHover, onRemove }: PlayerDotProps) {
   const point = denormalize(marker.position);
   const color = roleConfigs[player.role].color;
   const label = player.alias || player.ign.slice(0, 2).toUpperCase();
@@ -658,7 +663,13 @@ function PlayerDot({ marker, player, markerScale, selected, briefingMode, onSele
       }}
     >
       <Circle radius={selected ? 18 : 15} fill="#050607" opacity={0.86} stroke={selected ? '#f3d48a' : '#101418'} strokeWidth={2} />
-      <Circle radius={11} fill={color} opacity={0.96} shadowColor={color} shadowBlur={selected ? 14 : 6} />
+      <Circle
+        radius={11}
+        fill={color}
+        opacity={0.96}
+        shadowColor={reduceEffects ? undefined : color}
+        shadowBlur={reduceEffects ? 0 : selected ? 14 : 6}
+      />
       <Text text={label} x={-18} y={17} width={36} align="center" fill="#f9f1df" fontSize={9} fontStyle="bold" />
       {marker.priority === 'high' ? <Circle radius={20} stroke="#f3d48a" strokeWidth={1.4} dash={[4, 4]} /> : null}
     </Group>

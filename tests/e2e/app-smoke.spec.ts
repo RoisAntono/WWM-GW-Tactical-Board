@@ -73,6 +73,14 @@ test('mobile board keeps canvas primary and opens side panels as drawers', async
   await page.getByRole('button', { name: 'Inspector', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Close inspector panel' })).toBeVisible();
   await expect(page.getByText('No Selection')).toBeVisible();
+  await page.getByRole('button', { name: 'Close inspector panel' }).click();
+
+  await page.getByRole('button', { name: 'Focus', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Tools', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Squad', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Inspector', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Tools', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Focus', exact: true })).toBeVisible();
 });
 
 test('mobile landscape can focus the board canvas by hiding chrome', async ({ page }) => {

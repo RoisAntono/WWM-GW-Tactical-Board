@@ -2657,7 +2657,7 @@ button:disabled {
     position: fixed;
     inset: 0;
     z-index: 30;
-    height: 100vh;
+    height: 100dvh;
     min-height: 0;
     background: #020303;
   }
@@ -2670,6 +2670,13 @@ button:disabled {
 
   .app-shell.is-board-focus .board-shell {
     grid-template-rows: 1fr;
+  }
+
+  .app-shell.is-board-focus .mobile-board-controls {
+    position: fixed;
+    right: calc(12px + env(safe-area-inset-right));
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 90;
   }
 
   .workspace-panel-slot {

@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ErrorBoundary, renderFatalError } from './app/ErrorBoundary';
+import { configureKonvaPerformance } from './app/konvaPerformance';
 import './styles/global.css';
+
+configureKonvaPerformance();
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
