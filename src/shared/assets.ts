@@ -6,11 +6,6 @@ export const assets = {
   mapFormat: 'webp',
   background: new URL('../../Assets/any-background.png', import.meta.url).href,
   backgroundCard: new URL('../../Assets/any-backgroundcard.png', import.meta.url).href,
-  tools: {
-    draw: new URL('../../Assets/Tools/draw.svg', import.meta.url).href,
-    move: new URL('../../Assets/Tools/move.svg', import.meta.url).href,
-    remove: new URL('../../Assets/Tools/remove.svg', import.meta.url).href,
-  },
   objectives: {
     blueGoose: new URL('../../Assets/Game Assets/blue-goose.svg', import.meta.url).href,
     blueTower: new URL('../../Assets/Game Assets/blue-tower.svg', import.meta.url).href,

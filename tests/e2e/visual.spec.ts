@@ -3,7 +3,12 @@ import { Buffer } from 'node:buffer';
 
 const visualViewports = [
   { name: 'desktop', width: 1440, height: 900 },
+  { name: 'macbook-air', width: 1559, height: 975 },
   { name: 'compact', width: 1180, height: 760 },
+  { name: 'tablet', width: 1024, height: 768 },
+  { name: 'portrait', width: 768, height: 1024 },
+  { name: 'mobile', width: 390, height: 844 },
+  { name: 'mobile-landscape', width: 932, height: 430 },
 ] as const;
 
 const matchCsv = [

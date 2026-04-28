@@ -2,9 +2,10 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState }
 import { Arrow, Circle, Group, Image, Label, Layer, Line, Rect, Stage, Tag, Text } from 'react-konva';
 import type Konva from 'konva';
 import type { KonvaEventObject } from 'konva/lib/Node';
+import { CircleDot, Eraser, FileText, Flag, MousePointer2, Route } from 'lucide-react';
 import { usePlanStore } from '../../app/store';
 import { assets } from '../../shared/assets';
-import { defaultObjectiveCategoryVisibility, getObjectiveCategory, objectiveAssets, roleConfigs } from '../../shared/constants';
+import { defaultObjectiveCategoryVisibility, getObjectiveCategory, objectiveAssets, objectiveLabels, roleConfigs } from '../../shared/constants';
 import { downloadDataUrl, downloadTextFile } from '../../shared/download';
 import type { Coordinate, ObjectiveMarker, ObjectiveType, Player, PlayerMarker, Route as RouteModel } from '../../types/domain';
 import { denormalize, mapSize, normalize, overlayScaleForView, routePoints } from './boardMath';
@@ -20,6 +21,7 @@ type BoardCanvasProps = {
   selectedObjectiveType: ObjectiveType;
   onObjectiveTypeChange: (type: ObjectiveType) => void;
   presentationMode?: boolean;
+  hideToolbar?: boolean;
 };
 
 type HoveredMarker = {
@@ -27,18 +29,32 @@ type HoveredMarker = {
   player: Player;
 };
 
+type ViewState = {
+  x: number;
+  y: number;
+  scale: number;
+  fitted: boolean;
+};
+
+type TouchZoomState = {
+  distance: number;
+  view: ViewState;
+};
+
 export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(function BoardCanvas(
-  { selectedObjectiveType, onObjectiveTypeChange, presentationMode = false },
+  { selectedObjectiveType, onObjectiveTypeChange, presentationMode = false, hideToolbar = false },
   ref,
 ) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<Konva.Stage>(null);
   const groupRef = useRef<Konva.Group>(null);
+  const viewRef = useRef<ViewState>({ x: 0, y: 0, scale: 0.16, fitted: false });
+  const touchZoomRef = useRef<TouchZoomState | undefined>(undefined);
   const size = useResizeObserver(wrapperRef);
   const mapImage = useImageElement(assets.map, assets.mapFallback);
   const [hoveredMarker, setHoveredMarker] = useState<HoveredMarker>();
   const [cursorCoordinate, setCursorCoordinate] = useState<Coordinate>();
-  const [view, setView] = useState({ x: 0, y: 0, scale: 0.16, fitted: false });
+  const [view, setView] = useState<ViewState>({ x: 0, y: 0, scale: 0.16, fitted: false });
 
   const {
     plan,
@@ -103,6 +119,10 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   }));
 
   useEffect(() => {
+    viewRef.current = view;
+  }, [view]);
+
+  useEffect(() => {
     if (!size.width || !size.height || (!presentationMode && view.fitted)) {
       return;
     }
@@ -139,7 +159,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
 
     const scaleBy = 1.08;
     const nextScale = event.evt.deltaY > 0 ? view.scale / scaleBy : view.scale * scaleBy;
-    const clampedScale = Math.min(Math.max(nextScale, 0.06), 0.7);
+    const clampedScale = clampViewScale(nextScale);
     const mousePointTo = {
       x: (pointer.x - view.x) / view.scale,
       y: (pointer.y - view.y) / view.scale,
@@ -151,6 +171,56 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
       y: pointer.y - mousePointTo.y * clampedScale,
       fitted: true,
     });
+  };
+
+  const handleTouchStart = (event: KonvaEventObject<TouchEvent>) => {
+    if (event.evt.touches.length !== 2) {
+      touchZoomRef.current = undefined;
+      return;
+    }
+
+    const touchPair = getTouchPair(event.evt.touches, stageRef.current?.container());
+    if (!touchPair) {
+      return;
+    }
+
+    event.evt.preventDefault();
+    touchZoomRef.current = {
+      distance: touchPair.distance,
+      view: viewRef.current,
+    };
+  };
+
+  const handleTouchMove = (event: KonvaEventObject<TouchEvent>) => {
+    const touchZoom = touchZoomRef.current;
+    if (!touchZoom || event.evt.touches.length !== 2) {
+      return;
+    }
+
+    const touchPair = getTouchPair(event.evt.touches, stageRef.current?.container());
+    if (!touchPair || touchZoom.distance <= 0) {
+      return;
+    }
+
+    event.evt.preventDefault();
+    const nextScale = clampViewScale(touchZoom.view.scale * (touchPair.distance / touchZoom.distance));
+    const mapPointTo = {
+      x: (touchPair.midpoint.x - touchZoom.view.x) / touchZoom.view.scale,
+      y: (touchPair.midpoint.y - touchZoom.view.y) / touchZoom.view.scale,
+    };
+
+    setView({
+      scale: nextScale,
+      x: touchPair.midpoint.x - mapPointTo.x * nextScale,
+      y: touchPair.midpoint.y - mapPointTo.y * nextScale,
+      fitted: true,
+    });
+  };
+
+  const handleTouchEnd = (event: KonvaEventObject<TouchEvent>) => {
+    if (event.evt.touches.length < 2) {
+      touchZoomRef.current = undefined;
+    }
   };
 
   const handleMapClick = () => {
@@ -208,7 +278,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
 
   return (
     <section className={`board-shell ${presentationMode ? 'is-presentation' : ''}`}>
-      {presentationMode ? null : <BoardToolbar
+      {presentationMode || hideToolbar ? null : <BoardToolbar
         tool={tool}
         briefingMode={briefingMode}
         selectedObjectiveType={selectedObjectiveType}
@@ -245,11 +315,104 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
       />}
 
       <div className="board-stage-wrap" ref={wrapperRef} data-testid="board-stage">
+        {hideToolbar && !presentationMode ? (
+          <div className="focus-tool-palette" aria-label="Focus board tools">
+            <button
+              type="button"
+              className={`icon-button ${tool === 'select' ? 'is-active' : ''}`}
+              title="Select / Pan"
+              aria-label="Select / Pan"
+              onClick={() => setTool('select')}
+            >
+              <MousePointer2 size={17} />
+            </button>
+            <button
+              type="button"
+              className={`icon-button ${tool === 'place-player' ? 'is-active' : ''}`}
+              disabled={briefingMode}
+              title="Place Player"
+              aria-label="Place Player"
+              onClick={() => setTool('place-player')}
+            >
+              <CircleDot size={17} />
+            </button>
+            <button
+              type="button"
+              className={`icon-button ${tool === 'draw-route' ? 'is-active' : ''}`}
+              disabled={briefingMode}
+              title="Draw Route"
+              aria-label="Draw Route"
+              onClick={() => setTool('draw-route')}
+            >
+              <Route size={17} />
+            </button>
+            <button
+              type="button"
+              className={`icon-button ${tool === 'place-objective' ? 'is-active' : ''}`}
+              disabled={briefingMode}
+              title="Place Objective"
+              aria-label="Place Objective"
+              onClick={() => setTool('place-objective')}
+            >
+              <Flag size={17} />
+            </button>
+            <button
+              type="button"
+              className={`icon-button ${tool === 'note' ? 'is-active' : ''}`}
+              disabled={briefingMode}
+              title="Add Note"
+              aria-label="Add Note"
+              onClick={() => setTool('note')}
+            >
+              <FileText size={17} />
+            </button>
+            <button
+              type="button"
+              className={`icon-button ${tool === 'remove' ? 'is-active' : ''}`}
+              disabled={briefingMode}
+              title={hasSelection ? 'Remove Selected' : 'Remove Tool'}
+              aria-label={hasSelection ? 'Remove Selected' : 'Remove Tool'}
+              onClick={() => {
+                if (hasSelection) {
+                  removeSelected();
+                  return;
+                }
+
+                setTool(tool === 'remove' ? 'select' : 'remove');
+              }}
+            >
+              <Eraser size={17} />
+            </button>
+            <select
+              className="focus-objective-select"
+              value={selectedObjectiveType}
+              disabled={briefingMode}
+              onChange={(event) => onObjectiveTypeChange(event.target.value as ObjectiveType)}
+              title="Objective type"
+              aria-label="Objective type"
+            >
+              {Object.entries(objectiveLabels).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            {tool === 'draw-route' ? (
+              <button type="button" className="text-action focus-finish-route" onClick={completeRoute}>
+                Finish
+              </button>
+            ) : null}
+          </div>
+        ) : null}
         <Stage
           ref={stageRef}
           width={size.width}
           height={size.height}
           onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
           onMouseMove={() => setCursorCoordinate(getNormalizedPointer())}
           onMouseLeave={() => setCursorCoordinate(undefined)}
         >
@@ -637,4 +800,34 @@ function MarkerTooltip({ hovered, markerScale }: { hovered: HoveredMarker; marke
       <Text text={lines.join('\n')} padding={8} fill="#f7eedb" fontSize={12} lineHeight={1.2} />
     </Label>
   );
+}
+
+function clampViewScale(scale: number): number {
+  return Math.min(Math.max(scale, 0.06), 0.7);
+}
+
+function getTouchPair(touches: TouchList, container?: HTMLDivElement | null) {
+  if (!container || touches.length < 2) {
+    return undefined;
+  }
+
+  const rect = container.getBoundingClientRect();
+  const first = {
+    x: touches[0].clientX - rect.left,
+    y: touches[0].clientY - rect.top,
+  };
+  const second = {
+    x: touches[1].clientX - rect.left,
+    y: touches[1].clientY - rect.top,
+  };
+  const dx = first.x - second.x;
+  const dy = first.y - second.y;
+
+  return {
+    distance: Math.hypot(dx, dy),
+    midpoint: {
+      x: (first.x + second.x) / 2,
+      y: (first.y + second.y) / 2,
+    },
+  };
 }

@@ -50,6 +50,54 @@ test('renders a non-empty tactical board canvas', async ({ page }) => {
     .toBe(true);
 });
 
+test('mobile board keeps canvas primary and opens side panels as drawers', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const boardStage = page.getByTestId('board-stage');
+  await expect(boardStage.locator('canvas').first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Focus', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Squad', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Inspector', exact: true })).toBeVisible();
+
+  await expect
+    .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
+    .toBe(true);
+
+  await page.getByRole('button', { name: 'Squad', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Close squad panel' })).toBeVisible();
+  await expect(page.getByText('Plan Squad')).toBeVisible();
+  await page.getByRole('button', { name: 'Close squad panel' }).click();
+  await expect(page.getByRole('button', { name: 'Close squad panel' })).toBeHidden();
+
+  await page.getByRole('button', { name: 'Inspector', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Close inspector panel' })).toBeVisible();
+  await expect(page.getByText('No Selection')).toBeVisible();
+});
+
+test('mobile landscape can focus the board canvas by hiding chrome', async ({ page }) => {
+  await page.setViewportSize({ width: 932, height: 430 });
+  await page.goto('/');
+
+  const boardStage = page.getByTestId('board-stage');
+  await expect(boardStage.locator('canvas').first()).toBeVisible();
+  const initialHeight = await boardStage.evaluate((element) => element.getBoundingClientRect().height);
+
+  await page.getByRole('button', { name: 'Focus' }).click();
+  await expect(page.getByRole('button', { name: 'Tools' })).toBeVisible();
+  await expect(page.getByLabel('Focus board tools').getByRole('button', { name: 'Place Player' })).toBeVisible();
+  await expect(page.getByLabel('Focus board tools').getByRole('button', { name: 'Draw Route' })).toBeVisible();
+  await expect(page.getByLabel('Focus board tools').getByRole('button', { name: 'Place Objective' })).toBeVisible();
+  await expect(page.getByLabel('Focus board tools').getByRole('button', { name: 'Add Note' })).toBeVisible();
+  await expect(page.getByLabel('Focus board tools').getByRole('button', { name: 'Remove Tool' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Guild Wars Tactical Board' })).toHaveCount(0);
+  const focusedHeight = await boardStage.evaluate((element) => element.getBoundingClientRect().height);
+
+  expect(focusedHeight).toBeGreaterThan(initialHeight + 80);
+  await page.getByRole('button', { name: 'Tools' }).click();
+  await expect(page.getByRole('button', { name: 'Focus' })).toBeVisible();
+});
+
 test('opens match CSV import review with audit metadata and source column', async ({ page }) => {
   await page.getByRole('button', { name: 'Member Data' }).click();
   await page.getByTestId('match-csv-input').setInputFiles({

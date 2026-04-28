@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { Eye, EyeOff, PanelLeft, PanelRight, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePlanStore } from './store';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
@@ -21,6 +21,8 @@ export function App() {
   const [view, setView] = useState<AppView>('board');
   const [settingsNotice, setSettingsNotice] = useState('');
   const [fullBoard, setFullBoard] = useState(false);
+  const [mobilePanel, setMobilePanel] = useState<'roster' | 'inspector' | null>(null);
+  const [boardFocus, setBoardFocus] = useState(false);
   const [selectedObjectiveType, setSelectedObjectiveType] = useState<ObjectiveType>('red-tower');
   const [sharePreview, setSharePreview] = useState<WorkspaceSharePreviewState>();
   const sanitizePlan = usePlanStore((state) => state.sanitizePlan);
@@ -124,6 +126,8 @@ export function App() {
   const changeView = (nextView: AppView, notice = '') => {
     setView(nextView);
     setSettingsNotice(nextView === 'settings' ? notice : '');
+    setMobilePanel(null);
+    setBoardFocus(false);
     if (nextView !== 'board') {
       exitFullBoard();
     }
@@ -145,25 +149,63 @@ export function App() {
   };
 
   return (
-    <div className={`app-shell ${view !== 'board' ? 'is-data-view' : ''}`}>
-      <TopBar
-        boardRef={boardRef}
-        view={view}
-        onViewChange={changeView}
-        fullBoard={fullBoard}
-        onFullBoardToggle={fullBoard ? exitFullBoard : enterFullBoard}
-      />
+    <div className={`app-shell ${view !== 'board' ? 'is-data-view' : ''} ${boardFocus ? 'is-board-focus' : ''}`}>
+      {view === 'board' && boardFocus ? null : (
+        <TopBar
+          boardRef={boardRef}
+          view={view}
+          onViewChange={changeView}
+          fullBoard={fullBoard}
+          onFullBoardToggle={fullBoard ? exitFullBoard : enterFullBoard}
+        />
+      )}
       {view === 'board' ? (
         <>
-          <PhaseTabs />
+          {boardFocus ? null : <PhaseTabs />}
           <main className="workspace-grid">
-            <RosterPanel onOpenMemberData={() => changeView('members')} />
+            <div className={`workspace-panel-slot roster-slot ${mobilePanel === 'roster' ? 'is-mobile-open' : ''}`}>
+              <button
+                className="icon-button mobile-panel-close"
+                title="Close squad panel"
+                aria-label="Close squad panel"
+                onClick={() => setMobilePanel(null)}
+              >
+                <X size={17} />
+              </button>
+              <RosterPanel onOpenMemberData={() => changeView('members')} />
+            </div>
             <BoardCanvas
               ref={boardRef}
               selectedObjectiveType={selectedObjectiveType}
               onObjectiveTypeChange={setSelectedObjectiveType}
+              hideToolbar={boardFocus}
             />
-            <InspectorPanel />
+            <div className={`workspace-panel-slot inspector-slot ${mobilePanel === 'inspector' ? 'is-mobile-open' : ''}`}>
+              <button
+                className="icon-button mobile-panel-close"
+                title="Close inspector panel"
+                aria-label="Close inspector panel"
+                onClick={() => setMobilePanel(null)}
+              >
+                <X size={17} />
+              </button>
+              <InspectorPanel />
+            </div>
+            <div className="mobile-board-controls" aria-label="Board panels">
+              <button className="mode-toggle board-focus-toggle" onClick={() => setBoardFocus((focused) => !focused)}>
+                {boardFocus ? <Eye size={15} /> : <EyeOff size={15} />}
+                {boardFocus ? 'Tools' : 'Focus'}
+              </button>
+              <button className="mode-toggle" onClick={() => setMobilePanel('roster')}>
+                <PanelLeft size={15} />
+                Squad
+              </button>
+              <button className="mode-toggle" onClick={() => setMobilePanel('inspector')}>
+                <PanelRight size={15} />
+                Inspector
+              </button>
+            </div>
+            {mobilePanel ? <button className="mobile-panel-backdrop" aria-label="Close board panel" onClick={() => setMobilePanel(null)} /> : null}
           </main>
         </>
       ) : view === 'members' ? (

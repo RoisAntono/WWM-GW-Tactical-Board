@@ -115,12 +115,6 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
             onChange={(event) => setPlanMeta({ title: event.target.value, opponent: plan.opponent ?? '' })}
             aria-label="Plan title"
           />
-          <input
-            value={plan.opponent ?? ''}
-            onChange={(event) => setPlanMeta({ title: plan.title, opponent: event.target.value })}
-            placeholder="Opponent"
-            aria-label="Opponent"
-          />
         </div>
 
         <div className="top-actions">
