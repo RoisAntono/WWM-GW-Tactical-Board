@@ -3,8 +3,7 @@ import {
   FileJson,
   Cloud,
   Database,
-  Maximize2,
-  Minimize2,
+  EyeOff,
   Redo2,
   RotateCcw,
   Settings as SettingsIcon,
@@ -29,12 +28,11 @@ type TopBarProps = {
   boardRef: RefObject<BoardCanvasHandle | null>;
   view: 'board' | 'members' | 'settings';
   onViewChange: (view: 'board' | 'members' | 'settings') => void;
-  fullBoard: boolean;
-  onFullBoardToggle: () => void;
+  onBoardFocusOpen: () => void;
   onCloudSavesOpen: () => void;
 };
 
-export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardToggle, onCloudSavesOpen }: TopBarProps) {
+export function TopBar({ boardRef, view, onViewChange, onBoardFocusOpen, onCloudSavesOpen }: TopBarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [importError, setImportError] = useState('');
   const [importReport, setImportReport] = useState<BackupCompatibilityReport>();
@@ -44,7 +42,7 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
   const [shareNotice, setShareNotice] = useState('');
   const [shareLoading, setShareLoading] = useState(false);
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
-  const { plan, guild, activePhaseId, briefingMode, historyPast, historyFuture, undo, redo, setPlan, setWorkspaceBackup, setPlanMeta, resetPlan, setBriefingMode } =
+  const { plan, guild, activePhaseId, historyPast, historyFuture, undo, redo, setPlan, setWorkspaceBackup, setPlanMeta, resetPlan } =
     usePlanStore();
 
   const handleImportPlan = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -138,22 +136,14 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
           <button className="icon-button" title="Redo (Ctrl+Shift+Z)" disabled={historyFuture.length === 0} onClick={redo}>
             <Redo2 size={16} />
           </button>
-          <button className={`mode-toggle ${briefingMode ? 'is-active' : ''}`} onClick={() => setBriefingMode(!briefingMode)}>
-            Briefing
-          </button>
           <button className="icon-button" title="Cloud slots" aria-label="Cloud slots" onClick={onCloudSavesOpen}>
             <Cloud size={16} />
           </button>
           <button className="icon-button" title="Share encrypted workspace link" aria-label="Share encrypted workspace link" onClick={handleCreateShareLink}>
             <Share2 size={16} />
           </button>
-          <button
-            className={`icon-button ${fullBoard ? 'is-active' : ''}`}
-            title={fullBoard ? 'Exit full board (F)' : 'Full board (F)'}
-            disabled={view !== 'board'}
-            onClick={onFullBoardToggle}
-          >
-            {fullBoard ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          <button className="icon-button" title="Focus workspace" aria-label="Focus workspace" disabled={view !== 'board'} onClick={onBoardFocusOpen}>
+            <EyeOff size={16} />
           </button>
           <button className="icon-button" title="Import plan JSON" onClick={() => fileInputRef.current?.click()}>
             <Upload size={16} />

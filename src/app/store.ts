@@ -75,7 +75,6 @@ type PlanStore = {
   tool: ToolMode;
   layerVisibility: LayerVisibility;
   objectiveCategoryVisibility: ObjectiveCategoryVisibility;
-  briefingMode: boolean;
   settings: AppSettings;
   undo: () => void;
   redo: () => void;
@@ -91,7 +90,6 @@ type PlanStore = {
   setTool: (tool: ToolMode) => void;
   toggleLayer: (layer: LayerKey) => void;
   toggleObjectiveCategory: (category: ObjectiveCategory) => void;
-  setBriefingMode: (enabled: boolean) => void;
   setGeminiApiKey: (apiKey: string) => void;
   clearGeminiApiKey: () => void;
   setSuppressOcrWarning: (suppress: boolean) => void;
@@ -145,7 +143,6 @@ export const usePlanStore = create<PlanStore>()(
       tool: 'select',
       layerVisibility: defaultLayerVisibility,
       objectiveCategoryVisibility: defaultObjectiveCategoryVisibility,
-      briefingMode: false,
       settings: defaultSettings,
       undo: () => {
         const { historyPast } = get();
@@ -223,7 +220,6 @@ export const usePlanStore = create<PlanStore>()(
           tool: 'select',
           layerVisibility: defaultLayerVisibility,
           objectiveCategoryVisibility: defaultObjectiveCategoryVisibility,
-          briefingMode: false,
         }));
       },
       setPlanMeta: (meta) =>
@@ -311,7 +307,6 @@ export const usePlanStore = create<PlanStore>()(
             },
           };
         }),
-      setBriefingMode: (briefingMode) => set({ briefingMode, tool: 'select' }),
       setGeminiApiKey: (apiKey) =>
         set((state) => ({
           settings: {
@@ -817,7 +812,6 @@ export const usePlanStore = create<PlanStore>()(
         activePhaseId: state.activePhaseId,
         layerVisibility: state.layerVisibility,
         objectiveCategoryVisibility: state.objectiveCategoryVisibility,
-        briefingMode: state.briefingMode,
         settings: state.settings,
       }),
       migrate: (persistedState) => {

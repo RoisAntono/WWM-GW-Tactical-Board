@@ -5,7 +5,6 @@ import type { LayerKey, ObjectiveCategory, ObjectiveCategoryVisibility, Objectiv
 
 type BoardToolbarProps = {
   tool: ToolMode;
-  briefingMode: boolean;
   selectedObjectiveType: ObjectiveType;
   visibleLayers: Record<LayerKey, boolean>;
   visibleObjectiveCategories: ObjectiveCategoryVisibility;
@@ -31,7 +30,6 @@ const layerLabels: Array<{ key: LayerKey; label: string }> = [
 
 export function BoardToolbar({
   tool,
-  briefingMode,
   selectedObjectiveType,
   visibleLayers,
   visibleObjectiveCategories,
@@ -54,7 +52,6 @@ export function BoardToolbar({
         </IconButton>
         <IconButton
           active={tool === 'place-player'}
-          disabled={briefingMode}
           label="Place Player (P)"
           onClick={() => onToolChange('place-player')}
         >
@@ -62,7 +59,6 @@ export function BoardToolbar({
         </IconButton>
         <IconButton
           active={tool === 'draw-route'}
-          disabled={briefingMode}
           label="Draw Route (R)"
           onClick={() => onToolChange('draw-route')}
         >
@@ -70,18 +66,16 @@ export function BoardToolbar({
         </IconButton>
         <IconButton
           active={tool === 'place-objective'}
-          disabled={briefingMode}
           label="Place Objective (O)"
           onClick={() => onToolChange('place-objective')}
         >
           <Flag size={17} />
         </IconButton>
-        <IconButton active={tool === 'note'} disabled={briefingMode} label="Add Note (N)" onClick={() => onToolChange('note')}>
+        <IconButton active={tool === 'note'} label="Add Note (N)" onClick={() => onToolChange('note')}>
           <FileText size={17} />
         </IconButton>
         <IconButton
           active={tool === 'remove'}
-          disabled={briefingMode}
           label={hasSelection ? 'Remove Selected (Delete)' : 'Remove Tool (E)'}
           onClick={() => {
             if (hasSelection) {
@@ -99,7 +93,6 @@ export function BoardToolbar({
       <select
         className="objective-select"
         value={selectedObjectiveType}
-        disabled={briefingMode}
         onChange={(event) => onObjectiveTypeChange(event.target.value as ObjectiveType)}
         title="Objective type"
       >
@@ -116,7 +109,7 @@ export function BoardToolbar({
         </button>
       ) : null}
 
-      <button className="text-action" disabled={briefingMode} onClick={onLoadObjectivePreset} title="Reload calibrated objective coordinates">
+      <button className="text-action" onClick={onLoadObjectivePreset} title="Reload calibrated objective coordinates">
         <LocateFixed size={15} />
         Objective Preset
       </button>

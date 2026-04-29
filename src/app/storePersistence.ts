@@ -16,7 +16,6 @@ export type PersistedPlanState = Partial<{
   activePhaseId: string;
   layerVisibility: LayerVisibility;
   objectiveCategoryVisibility: ObjectiveCategoryVisibility;
-  briefingMode: boolean;
   settings: AppSettings;
 }>;
 
@@ -26,7 +25,6 @@ export type HydratedPlanState = {
   activePhaseId: string;
   layerVisibility: LayerVisibility;
   objectiveCategoryVisibility: ObjectiveCategoryVisibility;
-  briefingMode: boolean;
   settings: AppSettings;
 };
 
@@ -43,7 +41,6 @@ export function normalizePersistedState(state: PersistedPlanState): HydratedPlan
       ...defaultObjectiveCategoryVisibility,
       ...state.objectiveCategoryVisibility,
     },
-    briefingMode: state.briefingMode ?? false,
     settings: normalizeSettings(state.settings),
   };
 }

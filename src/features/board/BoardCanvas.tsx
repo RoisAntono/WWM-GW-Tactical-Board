@@ -21,7 +21,6 @@ export type BoardCanvasHandle = {
 type BoardCanvasProps = {
   selectedObjectiveType: ObjectiveType;
   onObjectiveTypeChange: (type: ObjectiveType) => void;
-  presentationMode?: boolean;
   hideToolbar?: boolean;
 };
 
@@ -54,7 +53,7 @@ type PointerPanState = {
 };
 
 export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(function BoardCanvas(
-  { selectedObjectiveType, onObjectiveTypeChange, presentationMode = false, hideToolbar = false },
+  { selectedObjectiveType, onObjectiveTypeChange, hideToolbar = false },
   ref,
 ) {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -80,7 +79,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
     tool,
     layerVisibility,
     objectiveCategoryVisibility,
-    briefingMode,
     setTool,
     toggleLayer,
     toggleObjectiveCategory,
@@ -116,13 +114,12 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
 
   const selectedRoute = activePhase?.routes.find((route) => route.id === selectedRouteId);
   const hasSelection = Boolean(selectedPlayerId || selectedRouteId || selectedObjectiveId || selectedNoteId);
-  const readOnly = briefingMode || presentationMode;
   const reduceCanvasEffects = shouldReduceCanvasEffects();
   const useFullResolutionMap = !reduceCanvasEffects && view.scale >= 0.32;
   const mapImageUrl = useFullResolutionMap ? assets.map : assets.mapCompact;
   const mapImage = useImageElement(mapImageUrl, assets.mapFallback);
   const useManualTouchPan = isCoarsePointer();
-  const canPanBoard = presentationMode || (tool === 'select' && !briefingMode);
+  const canPanBoard = tool === 'select';
 
   const visibleObjectiveCategories = {
     ...defaultObjectiveCategoryVisibility,
@@ -151,7 +148,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   }, []);
 
   useEffect(() => {
-    if (!size.width || !size.height || (!presentationMode && view.fitted)) {
+    if (!size.width || !size.height || view.fitted) {
       return;
     }
 
@@ -162,7 +159,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
       y: (size.height - mapSize.height * scale) / 2,
       fitted: true,
     });
-  }, [presentationMode, size.height, size.width]);
+  }, [size.height, size.width, view.fitted]);
 
   const handleWheel = (event: KonvaEventObject<WheelEvent>) => {
     event.evt.preventDefault();
@@ -389,7 +386,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
 
   const handleMapClick = () => {
     const position = getNormalizedPointer();
-    if (!position || readOnly) {
+    if (!position) {
       return;
     }
 
@@ -441,10 +438,9 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const markerScale = overlayScaleForView(view.scale);
 
   return (
-    <section className={`board-shell ${presentationMode ? 'is-presentation' : ''}`}>
-      {presentationMode || hideToolbar ? null : <BoardToolbar
+    <section className="board-shell">
+      {hideToolbar ? null : <BoardToolbar
         tool={tool}
-        briefingMode={briefingMode}
         selectedObjectiveType={selectedObjectiveType}
         visibleLayers={layerVisibility}
         visibleObjectiveCategories={visibleObjectiveCategories}
@@ -479,7 +475,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
       />}
 
       <div className="board-stage-wrap" ref={wrapperRef} data-testid="board-stage">
-        {hideToolbar && !presentationMode ? (
+        {hideToolbar ? (
           <div className="focus-tool-palette" aria-label="Focus board tools">
             <button
               type="button"
@@ -493,7 +489,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             <button
               type="button"
               className={`icon-button ${tool === 'place-player' ? 'is-active' : ''}`}
-              disabled={briefingMode}
               title="Place Player"
               aria-label="Place Player"
               onClick={() => setTool('place-player')}
@@ -503,7 +498,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             <button
               type="button"
               className={`icon-button ${tool === 'draw-route' ? 'is-active' : ''}`}
-              disabled={briefingMode}
               title="Draw Route"
               aria-label="Draw Route"
               onClick={() => setTool('draw-route')}
@@ -513,7 +507,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             <button
               type="button"
               className={`icon-button ${tool === 'place-objective' ? 'is-active' : ''}`}
-              disabled={briefingMode}
               title="Place Objective"
               aria-label="Place Objective"
               onClick={() => setTool('place-objective')}
@@ -523,7 +516,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             <button
               type="button"
               className={`icon-button ${tool === 'note' ? 'is-active' : ''}`}
-              disabled={briefingMode}
               title="Add Note"
               aria-label="Add Note"
               onClick={() => setTool('note')}
@@ -533,7 +525,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             <button
               type="button"
               className={`icon-button ${tool === 'remove' ? 'is-active' : ''}`}
-              disabled={briefingMode}
               title={hasSelection ? 'Remove Selected' : 'Remove Tool'}
               aria-label={hasSelection ? 'Remove Selected' : 'Remove Tool'}
               onClick={() => {
@@ -550,7 +541,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             <select
               className="focus-objective-select"
               value={selectedObjectiveType}
-              disabled={briefingMode}
               onChange={(event) => onObjectiveTypeChange(event.target.value as ObjectiveType)}
               title="Objective type"
               aria-label="Objective type"
@@ -627,11 +617,8 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                       key={route.id}
                       route={route}
                       markerScale={markerScale}
-                      selected={!presentationMode && route.id === selectedRouteId}
+                      selected={route.id === selectedRouteId}
                       onSelect={() => {
-                        if (presentationMode) {
-                          return;
-                        }
                         if (tool === 'remove') {
                           removeRoute(route.id);
                           return;
@@ -643,7 +630,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                   ))
                 : null}
 
-              {!presentationMode && layerVisibility.routes && selectedRoute?.points.length === 1 ? (
+              {layerVisibility.routes && selectedRoute?.points.length === 1 ? (
                 <RouteDraftPoint route={selectedRoute} markerScale={markerScale} />
               ) : null}
 
@@ -655,12 +642,8 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                         key={objective.id}
                         objective={objective}
                         markerScale={markerScale}
-                        selected={!presentationMode && objective.id === selectedObjectiveId}
-                        briefingMode={readOnly}
+                        selected={objective.id === selectedObjectiveId}
                         onSelect={() => {
-                          if (presentationMode) {
-                            return;
-                          }
                           if (tool === 'remove') {
                             removeObjective(objective.id);
                             return;
@@ -685,9 +668,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                         scaleY={markerScale}
                         onClick={(event) => {
                           event.cancelBubble = true;
-                          if (presentationMode) {
-                            return;
-                          }
                           if (tool === 'remove') {
                             removeNote(note.id);
                             return;
@@ -717,12 +697,8 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                         player={player}
                       markerScale={markerScale}
                       reduceEffects={reduceCanvasEffects}
-                      selected={!presentationMode && player.id === selectedPlayerId}
-                        briefingMode={readOnly}
+                      selected={player.id === selectedPlayerId}
                         onSelect={() => {
-                          if (presentationMode) {
-                            return;
-                          }
                           if (tool === 'remove') {
                             removePlayerMarker(player.id);
                             return;
@@ -733,9 +709,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                         onMove={(position) => movePlayerMarker(marker.id, position)}
                         onHover={(next) => setHoveredMarker(next ? { marker, player } : undefined)}
                         onRemove={() => {
-                          if (presentationMode) {
-                            return;
-                          }
                           removePlayerMarker(player.id);
                         }}
                       />
@@ -747,7 +720,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             </Group>
           </Layer>
         </Stage>
-        {presentationMode ? null : <div className="board-help">
+        <div className="board-help">
           <span>Wheel zoom</span>
           <span>Alt/Shift + wheel pan</span>
           <span>V/P/R/O/N/E tools</span>
@@ -765,7 +738,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
               X {cursorCoordinate.x.toFixed(3)} / Y {cursorCoordinate.y.toFixed(3)}
             </span>
           ) : null}
-        </div>}
+        </div>
       </div>
     </section>
   );
@@ -777,14 +750,13 @@ type PlayerDotProps = {
   markerScale: number;
   reduceEffects: boolean;
   selected: boolean;
-  briefingMode: boolean;
   onSelect: () => void;
   onMove: (position: Coordinate) => void;
   onHover: (hovered: boolean) => void;
   onRemove: () => void;
 };
 
-function PlayerDot({ marker, player, markerScale, reduceEffects, selected, briefingMode, onSelect, onMove, onHover, onRemove }: PlayerDotProps) {
+function PlayerDot({ marker, player, markerScale, reduceEffects, selected, onSelect, onMove, onHover, onRemove }: PlayerDotProps) {
   const point = denormalize(marker.position);
   const color = roleConfigs[player.role].color;
   const label = player.alias || player.ign.slice(0, 2).toUpperCase();
@@ -795,7 +767,7 @@ function PlayerDot({ marker, player, markerScale, reduceEffects, selected, brief
       y={point.y}
       scaleX={markerScale}
       scaleY={markerScale}
-      draggable={!briefingMode}
+      draggable
       onDragStart={(event) => {
         event.cancelBubble = true;
       }}
@@ -812,7 +784,7 @@ function PlayerDot({ marker, player, markerScale, reduceEffects, selected, brief
         onSelect();
       }}
       onMouseEnter={(event) => {
-        event.target.getStage()?.container().style.setProperty('cursor', briefingMode ? 'pointer' : 'grab');
+        event.target.getStage()?.container().style.setProperty('cursor', 'grab');
         onHover(true);
       }}
       onMouseLeave={(event) => {
@@ -891,12 +863,11 @@ type ObjectiveSpriteProps = {
   objective: ObjectiveMarker;
   markerScale: number;
   selected: boolean;
-  briefingMode: boolean;
   onSelect: () => void;
   onMove: (position: Coordinate) => void;
 };
 
-function ObjectiveSprite({ objective, markerScale, selected, briefingMode, onSelect, onMove }: ObjectiveSpriteProps) {
+function ObjectiveSprite({ objective, markerScale, selected, onSelect, onMove }: ObjectiveSpriteProps) {
   const image = useImageElement(objectiveAssets[objective.type]);
   const [hovered, setHovered] = useState(false);
   const point = denormalize(objective.position);
@@ -909,7 +880,7 @@ function ObjectiveSprite({ objective, markerScale, selected, briefingMode, onSel
       y={point.y}
       scaleX={markerScale}
       scaleY={markerScale}
-      draggable={!briefingMode}
+      draggable
       onDragStart={(event) => {
         event.cancelBubble = true;
       }}
@@ -922,7 +893,7 @@ function ObjectiveSprite({ objective, markerScale, selected, briefingMode, onSel
         onSelect();
       }}
       onMouseEnter={(event) => {
-        event.target.getStage()?.container().style.setProperty('cursor', briefingMode ? 'pointer' : 'grab');
+        event.target.getStage()?.container().style.setProperty('cursor', 'grab');
         setHovered(true);
       }}
       onMouseLeave={(event) => {

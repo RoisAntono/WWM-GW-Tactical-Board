@@ -1,5 +1,5 @@
-import { Eye, EyeOff, PanelLeft, PanelRight, X } from 'lucide-react';
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { Eye, EyeOff, ListChecks, PanelLeft, PanelRight, X } from 'lucide-react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { usePlanStore } from './store';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import { openWorkspaceShortShare, readWorkspaceShortShareId } from './workspaceShortShare';
@@ -26,9 +26,9 @@ export function App() {
   const boardRef = useRef<BoardCanvasHandle>(null);
   const [view, setView] = useState<AppView>('board');
   const [settingsNotice, setSettingsNotice] = useState('');
-  const [fullBoard, setFullBoard] = useState(false);
   const [mobilePanel, setMobilePanel] = useState<'roster' | 'inspector' | null>(null);
   const [boardFocus, setBoardFocus] = useState(false);
+  const [phasePanelOpen, setPhasePanelOpen] = useState(false);
   const [selectedObjectiveType, setSelectedObjectiveType] = useState<ObjectiveType>('red-tower');
   const [sharePreview, setSharePreview] = useState<WorkspaceSharePreviewState>();
   const [cloudSavesOpen, setCloudSavesOpen] = useState(false);
@@ -82,65 +82,23 @@ export function App() {
     };
   }, []);
 
-  const exitFullBoard = useCallback(() => {
-    setFullBoard(false);
-    if (document.fullscreenElement) {
-      void document.exitFullscreen().catch(() => undefined);
-    }
-  }, []);
-
-  const enterFullBoard = useCallback(() => {
-    setFullBoard(true);
-    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
-      void document.documentElement.requestFullscreen().catch(() => undefined);
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      if (!document.fullscreenElement) {
-        setFullBoard(false);
-      }
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (isEditableTarget(event.target)) {
-        return;
-      }
-
-      if (event.key.toLowerCase() === 'f' && view === 'board') {
-        event.preventDefault();
-        if (fullBoard) {
-          exitFullBoard();
-          return;
-        }
-
-        enterFullBoard();
-        return;
-      }
-
-      if (event.key === 'Escape') {
-        exitFullBoard();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [enterFullBoard, exitFullBoard, fullBoard, view]);
-
   const changeView = (nextView: AppView, notice = '') => {
     setView(nextView);
     setSettingsNotice(nextView === 'settings' ? notice : '');
     setMobilePanel(null);
     setBoardFocus(false);
-    if (nextView !== 'board') {
-      exitFullBoard();
-    }
+    setPhasePanelOpen(false);
+  };
+
+  const toggleBoardFocus = () => {
+    setBoardFocus((focused) => {
+      const nextFocused = !focused;
+      if (!nextFocused) {
+        setMobilePanel(null);
+        setPhasePanelOpen(false);
+      }
+      return nextFocused;
+    });
   };
 
   const closeSharePreview = () => {
@@ -165,8 +123,7 @@ export function App() {
           boardRef={boardRef}
           view={view}
           onViewChange={changeView}
-          fullBoard={fullBoard}
-          onFullBoardToggle={fullBoard ? exitFullBoard : enterFullBoard}
+          onBoardFocusOpen={toggleBoardFocus}
           onCloudSavesOpen={() => setCloudSavesOpen(true)}
         />
       )}
@@ -205,20 +162,66 @@ export function App() {
               <InspectorPanel />
             </div>
             <div className="mobile-board-controls" aria-label="Board panels">
-              <button className="mode-toggle board-focus-toggle" onClick={() => setBoardFocus((focused) => !focused)}>
+              <button className="mode-toggle board-focus-toggle" onClick={toggleBoardFocus}>
                 {boardFocus ? <Eye size={15} /> : <EyeOff size={15} />}
-                {boardFocus ? 'Tools' : 'Focus'}
+                {boardFocus ? 'Exit Focus' : 'Focus'}
               </button>
-              <button className="mode-toggle" onClick={() => setMobilePanel('roster')}>
+              {boardFocus ? (
+                <button
+                  className={`mode-toggle ${phasePanelOpen ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setPhasePanelOpen((open) => !open);
+                    setMobilePanel(null);
+                  }}
+                >
+                  <ListChecks size={15} />
+                  Phases
+                </button>
+              ) : null}
+              <button
+                className={`mode-toggle ${mobilePanel === 'roster' ? 'is-active' : ''}`}
+                onClick={() => {
+                  setMobilePanel((panel) => (panel === 'roster' ? null : 'roster'));
+                  setPhasePanelOpen(false);
+                }}
+              >
                 <PanelLeft size={15} />
                 Squad
               </button>
-              <button className="mode-toggle" onClick={() => setMobilePanel('inspector')}>
+              <button
+                className={`mode-toggle ${mobilePanel === 'inspector' ? 'is-active' : ''}`}
+                onClick={() => {
+                  setMobilePanel((panel) => (panel === 'inspector' ? null : 'inspector'));
+                  setPhasePanelOpen(false);
+                }}
+              >
                 <PanelRight size={15} />
                 Inspector
               </button>
             </div>
-            {mobilePanel ? <button className="mobile-panel-backdrop" aria-label="Close board panel" onClick={() => setMobilePanel(null)} /> : null}
+            {boardFocus && phasePanelOpen ? (
+              <div className="focus-phase-panel">
+                <button
+                  className="icon-button mobile-panel-close"
+                  title="Close phases panel"
+                  aria-label="Close phases panel"
+                  onClick={() => setPhasePanelOpen(false)}
+                >
+                  <X size={17} />
+                </button>
+                <PhaseTabs />
+              </div>
+            ) : null}
+            {mobilePanel || phasePanelOpen ? (
+              <button
+                className="mobile-panel-backdrop"
+                aria-label="Close board panel"
+                onClick={() => {
+                  setMobilePanel(null);
+                  setPhasePanelOpen(false);
+                }}
+              />
+            ) : null}
           </main>
         </>
       ) : view === 'members' ? (
@@ -234,20 +237,6 @@ export function App() {
           <SettingsPage notice={settingsNotice} onOpenMemberData={() => changeView('members')} />
         </Suspense>
       )}
-      {view === 'board' && fullBoard ? (
-        <div className="full-board-overlay" role="dialog" aria-label="Fullscreen tactical board">
-          <button className="icon-button full-board-exit" title="Exit full board (Esc)" aria-label="Exit full board" onClick={exitFullBoard}>
-            <X size={18} />
-          </button>
-          <Suspense fallback={<BoardCanvasFallback presentationMode />}>
-            <BoardCanvas
-              presentationMode
-              selectedObjectiveType={selectedObjectiveType}
-              onObjectiveTypeChange={setSelectedObjectiveType}
-            />
-          </Suspense>
-        </div>
-      ) : null}
       {sharePreview ? (
         <Suspense fallback={null}>
           <WorkspaceSharePreviewDialog state={sharePreview} onSave={saveSharedWorkspace} onClose={closeSharePreview} />
@@ -267,21 +256,13 @@ export function App() {
   );
 }
 
-function BoardCanvasFallback({ hideToolbar = false, presentationMode = false }: { hideToolbar?: boolean; presentationMode?: boolean }) {
+function BoardCanvasFallback({ hideToolbar = false }: { hideToolbar?: boolean }) {
   return (
-    <section className={`board-shell ${presentationMode ? 'is-presentation' : ''}`} aria-busy="true">
-      {hideToolbar || presentationMode ? null : <div className="board-toolbar board-toolbar-placeholder" />}
+    <section className="board-shell" aria-busy="true">
+      {hideToolbar ? null : <div className="board-toolbar board-toolbar-placeholder" />}
       <div className="board-stage-wrap board-stage-placeholder" data-testid="board-stage" />
     </section>
   );
-}
-
-function isEditableTarget(target: EventTarget | null): boolean {
-  if (!(target instanceof HTMLElement)) {
-    return false;
-  }
-
-  return target.isContentEditable || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT';
 }
 
 function clearWorkspaceShareHash(): void {

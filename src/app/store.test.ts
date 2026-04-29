@@ -18,7 +18,6 @@ describe('workspace store history', () => {
         tool: 'select',
         layerVisibility: defaultLayerVisibility,
         objectiveCategoryVisibility: defaultObjectiveCategoryVisibility,
-        briefingMode: false,
       },
       true,
     );

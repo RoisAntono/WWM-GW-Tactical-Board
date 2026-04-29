@@ -53,10 +53,6 @@ export function useKeyboardShortcuts() {
         return;
       }
 
-      if (store.briefingMode) {
-        return;
-      }
-
       if (key === 'v') {
         event.preventDefault();
         store.setTool('select');
