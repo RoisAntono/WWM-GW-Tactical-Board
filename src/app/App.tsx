@@ -4,7 +4,7 @@ import { usePlanStore } from './store';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import { openWorkspaceShortShare, readWorkspaceShortShareId } from './workspaceShortShare';
 import { createWorkspaceSharePayload, decryptWorkspaceShareHash, hasWorkspaceShareHash, type WorkspaceSharePayload } from './workspaceShareLink';
-import { BoardCanvas, type BoardCanvasHandle } from '../features/board/BoardCanvas';
+import type { BoardCanvasHandle } from '../features/board/BoardCanvas';
 import { RosterPanel } from '../features/roster/RosterPanel';
 import { InspectorPanel } from '../features/strategy/InspectorPanel';
 import { PhaseTabs } from '../features/strategy/PhaseTabs';
@@ -14,6 +14,7 @@ import type { ObjectiveType } from '../types/domain';
 
 type AppView = 'board' | 'members' | 'settings';
 
+const BoardCanvas = lazy(() => import('../features/board/BoardCanvas').then((module) => ({ default: module.BoardCanvas })));
 const MemberDataPage = lazy(() => import('../features/guild/MemberDataPage').then((module) => ({ default: module.MemberDataPage })));
 const SettingsPage = lazy(() => import('../features/settings/SettingsPage').then((module) => ({ default: module.SettingsPage })));
 const CloudSavesDialog = lazy(() => import('../features/strategy/CloudSavesDialog').then((module) => ({ default: module.CloudSavesDialog })));
@@ -184,12 +185,14 @@ export function App() {
               </button>
               <RosterPanel onOpenMemberData={() => changeView('members')} />
             </div>
-            <BoardCanvas
-              ref={boardRef}
-              selectedObjectiveType={selectedObjectiveType}
-              onObjectiveTypeChange={setSelectedObjectiveType}
-              hideToolbar={boardFocus}
-            />
+            <Suspense fallback={<BoardCanvasFallback hideToolbar={boardFocus} />}>
+              <BoardCanvas
+                ref={boardRef}
+                selectedObjectiveType={selectedObjectiveType}
+                onObjectiveTypeChange={setSelectedObjectiveType}
+                hideToolbar={boardFocus}
+              />
+            </Suspense>
             <div className={`workspace-panel-slot inspector-slot ${mobilePanel === 'inspector' ? 'is-mobile-open' : ''}`}>
               <button
                 className="icon-button mobile-panel-close"
@@ -236,11 +239,13 @@ export function App() {
           <button className="icon-button full-board-exit" title="Exit full board (Esc)" aria-label="Exit full board" onClick={exitFullBoard}>
             <X size={18} />
           </button>
-          <BoardCanvas
-            presentationMode
-            selectedObjectiveType={selectedObjectiveType}
-            onObjectiveTypeChange={setSelectedObjectiveType}
-          />
+          <Suspense fallback={<BoardCanvasFallback presentationMode />}>
+            <BoardCanvas
+              presentationMode
+              selectedObjectiveType={selectedObjectiveType}
+              onObjectiveTypeChange={setSelectedObjectiveType}
+            />
+          </Suspense>
         </div>
       ) : null}
       {sharePreview ? (
@@ -259,6 +264,15 @@ export function App() {
         </Suspense>
       ) : null}
     </div>
+  );
+}
+
+function BoardCanvasFallback({ hideToolbar = false, presentationMode = false }: { hideToolbar?: boolean; presentationMode?: boolean }) {
+  return (
+    <section className={`board-shell ${presentationMode ? 'is-presentation' : ''}`} aria-busy="true">
+      {hideToolbar || presentationMode ? null : <div className="board-toolbar board-toolbar-placeholder" />}
+      <div className="board-stage-wrap board-stage-placeholder" data-testid="board-stage" />
+    </section>
   );
 }
 

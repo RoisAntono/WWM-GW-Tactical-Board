@@ -2406,6 +2406,10 @@ button:disabled {
   scrollbar-gutter: stable;
 }
 
+.board-toolbar-placeholder {
+  min-height: 55px;
+}
+
 .tool-cluster,
 .layer-toggles,
 .objective-filter-toggles {
@@ -2463,6 +2467,15 @@ button:disabled {
   background:
     radial-gradient(circle at 50% 10%, rgba(217, 182, 111, 0.12), transparent 30%),
     #040607;
+}
+
+.board-stage-placeholder::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(circle at 50% 12%, rgba(217, 182, 111, 0.08), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 42%);
 }
 
 .board-help {
