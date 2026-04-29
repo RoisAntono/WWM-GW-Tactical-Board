@@ -47,6 +47,12 @@ type TouchPanState = {
   view: ViewState;
 };
 
+type PointerPanState = {
+  pointerId: number;
+  point: Coordinate;
+  view: ViewState;
+};
+
 export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(function BoardCanvas(
   { selectedObjectiveType, onObjectiveTypeChange, presentationMode = false, hideToolbar = false },
   ref,
@@ -57,6 +63,8 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const viewRef = useRef<ViewState>({ x: 0, y: 0, scale: 0.16, fitted: false });
   const touchZoomRef = useRef<TouchZoomState | undefined>(undefined);
   const touchPanRef = useRef<TouchPanState | undefined>(undefined);
+  const pointerPanRef = useRef<PointerPanState | undefined>(undefined);
+  const cursorFrameRef = useRef<number | undefined>(undefined);
   const size = useResizeObserver(wrapperRef);
   const mapImage = useImageElement(assets.map, assets.mapFallback);
   const [hoveredMarker, setHoveredMarker] = useState<HoveredMarker>();
@@ -112,6 +120,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const readOnly = briefingMode || presentationMode;
   const reduceCanvasEffects = shouldReduceCanvasEffects();
   const useManualTouchPan = isCoarsePointer();
+  const canPanBoard = presentationMode || (tool === 'select' && !briefingMode);
 
   const visibleObjectiveCategories = {
     ...defaultObjectiveCategoryVisibility,
@@ -130,6 +139,14 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   useEffect(() => {
     viewRef.current = view;
   }, [view]);
+
+  useEffect(() => {
+    return () => {
+      if (cursorFrameRef.current !== undefined) {
+        window.cancelAnimationFrame(cursorFrameRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!size.width || !size.height || (!presentationMode && view.fitted)) {
@@ -191,7 +208,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
         event.evt.touches.length === 1 &&
         stageContainer &&
         useManualTouchPan &&
-        (presentationMode || (tool === 'select' && !briefingMode)) &&
+        canPanBoard &&
         isBoardBackgroundTarget(event.target, stage, groupRef.current)
       ) {
         const touchPoint = getTouchPoint(event.evt.touches[0], stageContainer);
@@ -268,6 +285,104 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
     if (event.evt.touches.length === 0) {
       touchPanRef.current = undefined;
     }
+  };
+
+  const applyTransientPanView = (nextView: ViewState) => {
+    viewRef.current = nextView;
+    const group = groupRef.current;
+    if (!group) {
+      return;
+    }
+
+    group.x(nextView.x);
+    group.y(nextView.y);
+    group.getLayer()?.batchDraw();
+  };
+
+  const commitTransientPanView = () => {
+    setView({ ...viewRef.current, fitted: true });
+  };
+
+  const scheduleCursorCoordinateUpdate = () => {
+    if (cursorFrameRef.current !== undefined) {
+      return;
+    }
+
+    cursorFrameRef.current = window.requestAnimationFrame(() => {
+      cursorFrameRef.current = undefined;
+      setCursorCoordinate(getNormalizedPointer());
+    });
+  };
+
+  const clearCursorCoordinate = () => {
+    if (cursorFrameRef.current !== undefined) {
+      window.cancelAnimationFrame(cursorFrameRef.current);
+      cursorFrameRef.current = undefined;
+    }
+    setCursorCoordinate(undefined);
+  };
+
+  const handlePointerDown = (event: KonvaEventObject<PointerEvent>) => {
+    const stage = stageRef.current;
+    const pointer = stage?.getPointerPosition();
+    if (
+      !stage ||
+      !pointer ||
+      event.evt.pointerType === 'touch' ||
+      event.evt.button !== 0 ||
+      !canPanBoard ||
+      !isBoardBackgroundTarget(event.target, stage, groupRef.current)
+    ) {
+      return;
+    }
+
+    event.evt.preventDefault();
+    pointerPanRef.current = {
+      pointerId: event.evt.pointerId,
+      point: pointer,
+      view: viewRef.current,
+    };
+    stage.container().style.setProperty('cursor', 'grabbing');
+  };
+
+  const handlePointerMove = (event: KonvaEventObject<PointerEvent>) => {
+    const pointer = stageRef.current?.getPointerPosition();
+    const pointerPan = pointerPanRef.current;
+    if (!pointer || !pointerPan || pointerPan.pointerId !== event.evt.pointerId) {
+      scheduleCursorCoordinateUpdate();
+      return;
+    }
+
+    event.evt.preventDefault();
+    applyTransientPanView({
+      ...pointerPan.view,
+      x: pointerPan.view.x + pointer.x - pointerPan.point.x,
+      y: pointerPan.view.y + pointer.y - pointerPan.point.y,
+      fitted: true,
+    });
+  };
+
+  const handlePointerEnd = (event: KonvaEventObject<PointerEvent>) => {
+    const pointerPan = pointerPanRef.current;
+    if (!pointerPan || pointerPan.pointerId !== event.evt.pointerId) {
+      return;
+    }
+
+    pointerPanRef.current = undefined;
+    event.target.getStage()?.container().style.setProperty('cursor', 'default');
+    commitTransientPanView();
+    scheduleCursorCoordinateUpdate();
+  };
+
+  const handlePointerLeave = (event: KonvaEventObject<PointerEvent>) => {
+    clearCursorCoordinate();
+    if (!pointerPanRef.current) {
+      return;
+    }
+
+    pointerPanRef.current = undefined;
+    event.target.getStage()?.container().style.setProperty('cursor', 'default');
+    commitTransientPanView();
   };
 
   const handleMapClick = () => {
@@ -460,8 +575,11 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onTouchCancel={handleTouchEnd}
-          onMouseMove={() => setCursorCoordinate(getNormalizedPointer())}
-          onMouseLeave={() => setCursorCoordinate(undefined)}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
+          onPointerLeave={handlePointerLeave}
         >
           <Layer>
             <Group
@@ -470,12 +588,9 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
               y={view.y}
               scaleX={view.scale}
               scaleY={view.scale}
-              draggable={!useManualTouchPan && (presentationMode || (tool === 'select' && !briefingMode))}
+              draggable={false}
               onClick={handleMapClick}
               onTap={handleMapClick}
-              onDragEnd={(event) =>
-                setView((current) => ({ ...current, x: event.target.x(), y: event.target.y(), fitted: true }))
-              }
             >
               {mapImage ? (
                 <Image

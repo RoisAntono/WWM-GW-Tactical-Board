@@ -1,21 +1,25 @@
 import { Eye, EyeOff, PanelLeft, PanelRight, X } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { usePlanStore } from './store';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import { openWorkspaceShortShare, readWorkspaceShortShareId } from './workspaceShortShare';
 import { createWorkspaceSharePayload, decryptWorkspaceShareHash, hasWorkspaceShareHash, type WorkspaceSharePayload } from './workspaceShareLink';
 import { BoardCanvas, type BoardCanvasHandle } from '../features/board/BoardCanvas';
-import { MemberDataPage } from '../features/guild/MemberDataPage';
 import { RosterPanel } from '../features/roster/RosterPanel';
-import { SettingsPage } from '../features/settings/SettingsPage';
-import { CloudSavesDialog } from '../features/strategy/CloudSavesDialog';
 import { InspectorPanel } from '../features/strategy/InspectorPanel';
 import { PhaseTabs } from '../features/strategy/PhaseTabs';
 import { TopBar } from '../features/strategy/TopBar';
-import { WorkspaceSharePreviewDialog, type WorkspaceSharePreviewState } from '../features/strategy/WorkspaceSharePreviewDialog';
+import type { WorkspaceSharePreviewState } from '../features/strategy/WorkspaceSharePreviewDialog';
 import type { ObjectiveType } from '../types/domain';
 
 type AppView = 'board' | 'members' | 'settings';
+
+const MemberDataPage = lazy(() => import('../features/guild/MemberDataPage').then((module) => ({ default: module.MemberDataPage })));
+const SettingsPage = lazy(() => import('../features/settings/SettingsPage').then((module) => ({ default: module.SettingsPage })));
+const CloudSavesDialog = lazy(() => import('../features/strategy/CloudSavesDialog').then((module) => ({ default: module.CloudSavesDialog })));
+const WorkspaceSharePreviewDialog = lazy(() =>
+  import('../features/strategy/WorkspaceSharePreviewDialog').then((module) => ({ default: module.WorkspaceSharePreviewDialog })),
+);
 
 export function App() {
   const boardRef = useRef<BoardCanvasHandle>(null);
@@ -215,13 +219,17 @@ export function App() {
           </main>
         </>
       ) : view === 'members' ? (
-        <MemberDataPage
-          onOpenSettings={(notice) =>
-            changeView('settings', notice ?? 'Save a Gemini API key before using Match Gemini.')
-          }
-        />
+        <Suspense fallback={null}>
+          <MemberDataPage
+            onOpenSettings={(notice) =>
+              changeView('settings', notice ?? 'Save a Gemini API key before using Match Gemini.')
+            }
+          />
+        </Suspense>
       ) : (
-        <SettingsPage notice={settingsNotice} onOpenMemberData={() => changeView('members')} />
+        <Suspense fallback={null}>
+          <SettingsPage notice={settingsNotice} onOpenMemberData={() => changeView('members')} />
+        </Suspense>
       )}
       {view === 'board' && fullBoard ? (
         <div className="full-board-overlay" role="dialog" aria-label="Fullscreen tactical board">
@@ -236,14 +244,20 @@ export function App() {
         </div>
       ) : null}
       {sharePreview ? (
-        <WorkspaceSharePreviewDialog state={sharePreview} onSave={saveSharedWorkspace} onClose={closeSharePreview} />
+        <Suspense fallback={null}>
+          <WorkspaceSharePreviewDialog state={sharePreview} onSave={saveSharedWorkspace} onClose={closeSharePreview} />
+        </Suspense>
       ) : null}
-      <CloudSavesDialog
-        open={cloudSavesOpen}
-        payload={createWorkspaceSharePayload(currentPlan, currentGuild, currentActivePhaseId)}
-        onLoad={saveSharedWorkspace}
-        onClose={() => setCloudSavesOpen(false)}
-      />
+      {cloudSavesOpen ? (
+        <Suspense fallback={null}>
+          <CloudSavesDialog
+            open
+            payload={createWorkspaceSharePayload(currentPlan, currentGuild, currentActivePhaseId)}
+            onLoad={saveSharedWorkspace}
+            onClose={() => setCloudSavesOpen(false)}
+          />
+        </Suspense>
+      ) : null}
     </div>
   );
 }
