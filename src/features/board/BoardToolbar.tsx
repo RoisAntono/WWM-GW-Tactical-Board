@@ -154,7 +154,7 @@ export function BoardToolbar({
         ))}
       </div>
 
-      <IconButton label="Export Board PNG" onClick={onExportPng}>
+      <IconButton label="Export Map PNG" onClick={onExportPng}>
         <Download size={17} />
       </IconButton>
       <MapPinned className="toolbar-brand-mark" size={18} />

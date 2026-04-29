@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Arrow, Circle, Group, Image, Label, Layer, Line, Rect, Stage, Tag, Text } from 'react-konva';
-import type Konva from 'konva';
+import Konva from 'konva';
 import type { KonvaEventObject } from 'konva/lib/Node';
 import { CircleDot, Eraser, FileText, Flag, MousePointer2, Route } from 'lucide-react';
 import { shouldReduceCanvasEffects } from '../../app/konvaPerformance';
@@ -131,9 +131,9 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
 
   useImperativeHandle(ref, () => ({
     exportPng: () => {
-      const dataUrl = stageRef.current?.toDataURL({ pixelRatio: 2, mimeType: 'image/png' });
+      const dataUrl = exportFullMapPng(groupRef.current);
       if (dataUrl) {
-        downloadDataUrl(`${plan.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-board.png`, dataUrl);
+        downloadDataUrl(`${plan.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-map.png`, dataUrl);
       }
     },
   }));
@@ -471,9 +471,9 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
           );
         }}
         onExportPng={() => {
-          const dataUrl = stageRef.current?.toDataURL({ pixelRatio: 2, mimeType: 'image/png' });
+          const dataUrl = exportFullMapPng(groupRef.current);
           if (dataUrl) {
-            downloadDataUrl(`${plan.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-board.png`, dataUrl);
+            downloadDataUrl(`${plan.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-map.png`, dataUrl);
           }
         }}
       />}
@@ -977,6 +977,52 @@ function MarkerTooltip({ hovered, markerScale }: { hovered: HoveredMarker; marke
 
 function clampViewScale(scale: number): number {
   return Math.min(Math.max(scale, 0.06), 0.7);
+}
+
+function exportFullMapPng(sourceGroup?: Konva.Group | null): string | undefined {
+  if (!sourceGroup || typeof document === 'undefined') {
+    return undefined;
+  }
+
+  const container = document.createElement('div');
+  container.style.position = 'fixed';
+  container.style.left = '-10000px';
+  container.style.top = '0';
+  container.style.width = `${mapSize.width}px`;
+  container.style.height = `${mapSize.height}px`;
+  container.style.pointerEvents = 'none';
+  document.body.appendChild(container);
+
+  const stage = new Konva.Stage({
+    container,
+    width: mapSize.width,
+    height: mapSize.height,
+  });
+  const layer = new Konva.Layer();
+  const mapClone = sourceGroup.clone({
+    x: 0,
+    y: 0,
+    scaleX: 1,
+    scaleY: 1,
+    listening: false,
+  });
+
+  try {
+    layer.add(mapClone);
+    stage.add(layer);
+    layer.draw();
+    return stage.toDataURL({
+      x: 0,
+      y: 0,
+      width: mapSize.width,
+      height: mapSize.height,
+      pixelRatio: 1,
+      mimeType: 'image/png',
+    });
+  } finally {
+    stage.destroy();
+    container.remove();
+  }
 }
 
 function getTouchPair(touches: TouchList, container?: HTMLDivElement | null) {

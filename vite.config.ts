@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     assetsInlineLimit: 0,
+    chunkSizeWarningLimit: 1000,
   },
   test: {
     exclude: [...configDefaults.exclude, 'tests/e2e/**'],

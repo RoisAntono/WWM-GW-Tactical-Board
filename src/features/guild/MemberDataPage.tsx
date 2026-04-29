@@ -10,7 +10,7 @@ import { combineMatchDateTime } from '../../app/data/matchTime';
 import { usePlanStore } from '../../app/store';
 import { isWorkspaceBackup } from '../../app/workspaceSerialization';
 import { ConfirmDialog } from '../../shared/ConfirmDialog';
-import { downloadTextFile } from '../../shared/download';
+import { downloadBlob, downloadTextFile } from '../../shared/download';
 import { createId } from '../../shared/id';
 import type { GuildDatabase, GuildMember, ImportRow, ImportSource, MemberRank, MemberRole, MemberStatus } from '../../types/domain';
 import { MemberDataDashboard } from './MemberDataDashboard';
@@ -38,6 +38,7 @@ import { ImportAuditMeta } from './ImportAuditMeta';
 import { MatchScreenshotImportSession, type MatchScreenshotSessionFile } from '../roster/MatchScreenshotImportSession';
 import { ImportReviewTable } from '../roster/ImportReviewTable';
 import { parseRosterCsv } from '../roster/csvImport';
+import { createRosterWorkbookBlob } from '../roster/xlsxExport';
 import { geminiModel, recognizeRosterScreenshotWithGeminiMeta } from '../roster/geminiImport';
 import { recognizeRosterScreenshotWithMeta, type OcrProgress } from '../roster/ocrImport';
 
@@ -89,6 +90,7 @@ export function MemberDataPage({ onOpenSettings }: MemberDataPageProps) {
   const [showOcrWarning, setShowOcrWarning] = useState(false);
   const [suppressOcrWarningDraft, setSuppressOcrWarningDraft] = useState(false);
   const [backupReport, setBackupReport] = useState<BackupCompatibilityReport>();
+  const [xlsxExporting, setXlsxExporting] = useState(false);
 
   const {
     plan,
@@ -569,6 +571,19 @@ export function MemberDataPage({ onOpenSettings }: MemberDataPageProps) {
     geminiImageInputRef.current?.click();
   };
 
+  const exportXlsx = async () => {
+    setXlsxExporting(true);
+    setImportError('');
+    try {
+      const blob = await createRosterWorkbookBlob(plan, guild);
+      downloadBlob(`${safeName(plan.title)}-guild-data.xlsx`, blob);
+    } catch (error) {
+      setImportError(error instanceof Error ? error.message : 'Unable to export guild data XLSX.');
+    } finally {
+      setXlsxExporting(false);
+    }
+  };
+
   const imageImportProgress = screenshotSession?.progress;
   const reviewMatchTime = importContext?.kind === 'match' ? detectMatchTime(importRows) : undefined;
   const reviewValidatedRows = useMemo(
@@ -600,8 +615,10 @@ export function MemberDataPage({ onOpenSettings }: MemberDataPageProps) {
         onOcrImport={openOcrImport}
         onGeminiImport={openGeminiImport}
         onExportCsv={() => downloadTextFile(`${safeName(plan.title)}-members.csv`, Papa.unparse(selectMemberCsvRows(tableRows)), 'text/csv')}
+        onExportXlsx={exportXlsx}
         onExportBackup={() => downloadTextFile(`${safeName(plan.title)}-guild-backup.json`, JSON.stringify({ version: 1, guild }, null, 2), 'application/json')}
         onRestoreBackup={() => backupInputRef.current?.click()}
+        xlsxExporting={xlsxExporting}
       />
 
       <MemberDataDashboard guild={guild} stats={stats} activeLatest={activeLatest} />

@@ -6,8 +6,10 @@ type MemberDataHeaderProps = {
   onOcrImport: () => void;
   onGeminiImport: () => void;
   onExportCsv: () => void;
+  onExportXlsx: () => void;
   onExportBackup: () => void;
   onRestoreBackup: () => void;
+  xlsxExporting?: boolean;
 };
 
 export function MemberDataHeader({
@@ -16,8 +18,10 @@ export function MemberDataHeader({
   onOcrImport,
   onGeminiImport,
   onExportCsv,
+  onExportXlsx,
   onExportBackup,
   onRestoreBackup,
+  xlsxExporting = false,
 }: MemberDataHeaderProps) {
   return (
     <section className="member-data-header">
@@ -45,6 +49,10 @@ export function MemberDataHeader({
         <button className="secondary-button" onClick={onExportCsv}>
           <FileDown size={15} />
           CSV
+        </button>
+        <button className="secondary-button" disabled={xlsxExporting} onClick={onExportXlsx}>
+          <FileSpreadsheet size={15} />
+          XLSX
         </button>
         <button className="secondary-button" onClick={onExportBackup}>
           <Database size={15} />

@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 import { formatCompactNumber } from '../../shared/number';
-import { selectRosterCsvRows } from '../../app/data/selectors';
+import { selectMemberCsvRows, selectMemberStats, selectRosterCsvRows } from '../../app/data/selectors';
 import type { GuildDatabase, ImportRow, Player, TacticalPlan } from '../../types/domain';
 import { buildImportRow } from './importMapping';
 
@@ -43,6 +43,10 @@ export function playersToCsv(players: Player[]): string {
 
 export function planRosterToCsv(plan: TacticalPlan, guild: GuildDatabase): string {
   return Papa.unparse(selectRosterCsvRows(plan, guild));
+}
+
+export function guildMembersToCsv(guild: GuildDatabase): string {
+  return Papa.unparse(selectMemberCsvRows(selectMemberStats(guild)));
 }
 
 export function summarizePlayerStats(players: Player[]): Record<string, string> {

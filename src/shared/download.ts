@@ -10,6 +10,12 @@ export function downloadDataUrl(filename: string, dataUrl: string): void {
   triggerDownload(filename, dataUrl);
 }
 
+export function downloadBlob(filename: string, blob: Blob): void {
+  const url = URL.createObjectURL(blob);
+  triggerDownload(filename, url);
+  URL.revokeObjectURL(url);
+}
+
 function triggerDownload(filename: string, url: string): void {
   const anchor = document.createElement('a');
   anchor.href = url;

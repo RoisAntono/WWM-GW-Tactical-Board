@@ -1,7 +1,6 @@
 import {
   FileDown,
   FileJson,
-  FileSpreadsheet,
   Cloud,
   Database,
   Maximize2,
@@ -22,7 +21,6 @@ import { buildWorkspaceShareUrl, createWorkspaceShareHash, createWorkspaceShareP
 import { parseWorkspaceBackup, serializeWorkspaceBackup } from '../../app/workspaceSerialization';
 import { ConfirmDialog } from '../../shared/ConfirmDialog';
 import { downloadTextFile } from '../../shared/download';
-import { planRosterToCsv } from '../roster/csvImport';
 import { parsePlanJson, serializePlan } from './planSerialization';
 import { WorkspaceShareDialog } from './WorkspaceShareDialog';
 import type { BoardCanvasHandle } from '../board/BoardCanvas';
@@ -45,6 +43,7 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
   const [shareError, setShareError] = useState('');
   const [shareNotice, setShareNotice] = useState('');
   const [shareLoading, setShareLoading] = useState(false);
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const { plan, guild, activePhaseId, briefingMode, historyPast, historyFuture, undo, redo, setPlan, setWorkspaceBackup, setPlanMeta, resetPlan, setBriefingMode } =
     usePlanStore();
 
@@ -173,17 +172,10 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
           >
             <Database size={16} />
           </button>
-          <button
-            className="icon-button"
-            title="Export roster CSV"
-            onClick={() => downloadTextFile(`${safeName(plan.title)}-roster.csv`, planRosterToCsv(plan, guild), 'text/csv')}
-          >
-            <FileSpreadsheet size={16} />
-          </button>
-          <button className="icon-button" title="Export board PNG" onClick={() => boardRef.current?.exportPng()}>
+          <button className="icon-button" title="Export map PNG" onClick={() => boardRef.current?.exportPng()}>
             <FileDown size={16} />
           </button>
-          <button className="icon-button danger" title="Reset local plan" onClick={resetPlan}>
+          <button className="icon-button danger" title="Reset local plan" onClick={() => setResetConfirmOpen(true)}>
             <RotateCcw size={16} />
           </button>
           <input ref={fileInputRef} hidden type="file" accept=".json,.wwm-plan.json,application/json" onChange={handleImportPlan} />
@@ -216,6 +208,20 @@ export function TopBar({ boardRef, view, onViewChange, fullBoard, onFullBoardTog
         error={shareError}
         notice={shareNotice}
         onClose={() => setShareDialogOpen(false)}
+      />
+      <ConfirmDialog
+        open={resetConfirmOpen}
+        eyebrow="Reset Local Plan"
+        title="Reset all local plan data?"
+        message="This will replace the current local plan with a fresh default plan. Export a workspace backup first if you need to keep this work."
+        confirmLabel="Reset Plan"
+        cancelLabel="Keep Plan"
+        variant="danger"
+        onConfirm={() => {
+          resetPlan();
+          setResetConfirmOpen(false);
+        }}
+        onCancel={() => setResetConfirmOpen(false)}
       />
     </>
   );
