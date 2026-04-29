@@ -53,6 +53,10 @@ type PointerPanState = {
   view: ViewState;
 };
 
+type NavigatorWithMemory = Navigator & {
+  deviceMemory?: number;
+};
+
 export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(function BoardCanvas(
   { selectedObjectiveType, onObjectiveTypeChange, presentationMode = false, hideToolbar = false },
   ref,
@@ -66,7 +70,8 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   const pointerPanRef = useRef<PointerPanState | undefined>(undefined);
   const cursorFrameRef = useRef<number | undefined>(undefined);
   const size = useResizeObserver(wrapperRef);
-  const mapImage = useImageElement(assets.map, assets.mapFallback);
+  const mapImageUrl = useMemo(() => (shouldUseCompactMap() ? assets.mapCompact : assets.map), []);
+  const mapImage = useImageElement(mapImageUrl, assets.mapFallback);
   const [hoveredMarker, setHoveredMarker] = useState<HoveredMarker>();
   const [cursorCoordinate, setCursorCoordinate] = useState<Coordinate>();
   const [view, setView] = useState<ViewState>({ x: 0, y: 0, scale: 0.16, fitted: false });
@@ -1017,4 +1022,13 @@ function isBoardBackgroundTarget(target: Konva.Node, stage?: Konva.Stage | null,
 
 function isCoarsePointer(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+}
+
+function shouldUseCompactMap(): boolean {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return false;
+  }
+
+  const memory = (navigator as NavigatorWithMemory).deviceMemory;
+  return isCoarsePointer() || (typeof memory === 'number' && memory <= 4);
 }

@@ -75,7 +75,7 @@ body {
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.88)),
-    url('../../Assets/any-background.png') center/cover fixed;
+    url('../../Assets/any-background.webp') center/cover fixed;
 }
 
 .app-shell {
@@ -1017,7 +1017,7 @@ button:disabled {
   border: 1px solid rgba(217, 182, 111, 0.38);
   background:
     linear-gradient(180deg, rgba(10, 14, 16, 0.95), rgba(6, 8, 9, 0.98)),
-    url('../../Assets/any-background.png') center/cover;
+    url('../../Assets/any-background.webp') center/cover;
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.62);
   padding: 16px;
 }
@@ -1190,7 +1190,7 @@ button:disabled {
   border: 1px solid rgba(217, 182, 111, 0.38);
   background:
     linear-gradient(180deg, rgba(10, 14, 16, 0.96), rgba(6, 8, 9, 0.98)),
-    url('../../Assets/any-backgroundcard.png') center/cover;
+    url('../../Assets/any-backgroundcard.webp') center/cover;
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.62);
   padding: 16px;
 }
@@ -1386,7 +1386,7 @@ button:disabled {
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(15, 20, 23, 0.98), rgba(7, 10, 11, 0.98)),
-    url('../../Assets/any-backgroundcard.png') center/cover;
+    url('../../Assets/any-backgroundcard.webp') center/cover;
   box-shadow: 0 28px 84px rgba(0, 0, 0, 0.72);
   padding: 18px;
 }
@@ -1474,7 +1474,7 @@ button:disabled {
   border: 1px solid rgba(217, 182, 111, 0.34);
   background:
     linear-gradient(180deg, rgba(15, 20, 23, 0.98), rgba(7, 10, 11, 0.98)),
-    url('../../Assets/any-backgroundcard.png') center/cover;
+    url('../../Assets/any-backgroundcard.webp') center/cover;
   box-shadow: 0 28px 84px rgba(0, 0, 0, 0.72);
   padding: 18px;
 }
@@ -1673,7 +1673,7 @@ button:disabled {
   border: 1px solid rgba(217, 182, 111, 0.34);
   background:
     linear-gradient(180deg, rgba(15, 20, 23, 0.98), rgba(7, 10, 11, 0.98)),
-    url('../../Assets/any-backgroundcard.png') center/cover;
+    url('../../Assets/any-backgroundcard.webp') center/cover;
   box-shadow: 0 28px 84px rgba(0, 0, 0, 0.72);
   padding: 18px;
 }
@@ -2221,7 +2221,7 @@ button:disabled {
   border-radius: 6px;
   background:
     linear-gradient(180deg, rgba(13, 17, 19, 0.98), rgba(6, 8, 9, 0.99)),
-    url('../../Assets/any-backgroundcard.png') center/cover;
+    url('../../Assets/any-backgroundcard.webp') center/cover;
   box-shadow: 0 18px 56px rgba(0, 0, 0, 0.72);
   padding: 12px;
 }
@@ -3166,7 +3166,7 @@ button:disabled {
     border-top: 1px solid rgba(217, 182, 111, 0.18);
     background:
       linear-gradient(180deg, rgba(7, 10, 11, 0.86), rgba(7, 10, 11, 0.98)),
-      url('../../Assets/any-backgroundcard.png') center/cover;
+      url('../../Assets/any-backgroundcard.webp') center/cover;
     padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
   }
 
