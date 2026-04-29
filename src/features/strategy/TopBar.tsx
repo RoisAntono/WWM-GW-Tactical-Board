@@ -1,9 +1,8 @@
 import {
-  FileDown,
-  FileJson,
   Cloud,
   Database,
   EyeOff,
+  FileDown,
   Redo2,
   RotateCcw,
   Settings as SettingsIcon,
@@ -17,10 +16,10 @@ import { createPlanImportReport, createWorkspaceImportReport, type BackupCompati
 import { usePlanStore } from '../../app/store';
 import { createWorkspaceShortShareUrl } from '../../app/workspaceShortShare';
 import { buildWorkspaceShareUrl, createWorkspaceShareHash, createWorkspaceSharePayload } from '../../app/workspaceShareLink';
-import { parseWorkspaceBackup, serializeWorkspaceBackup } from '../../app/workspaceSerialization';
+import { parseWorkspaceBackup } from '../../app/workspaceSerialization';
 import { ConfirmDialog } from '../../shared/ConfirmDialog';
-import { downloadTextFile } from '../../shared/download';
-import { parsePlanJson, serializePlan } from './planSerialization';
+import { parsePlanJson } from './planSerialization';
+import { ExportDialog } from './ExportDialog';
 import { WorkspaceShareDialog } from './WorkspaceShareDialog';
 import type { BoardCanvasHandle } from '../board/BoardCanvas';
 
@@ -42,6 +41,7 @@ export function TopBar({ boardRef, view, onViewChange, onBoardFocusOpen, onCloud
   const [shareNotice, setShareNotice] = useState('');
   const [shareLoading, setShareLoading] = useState(false);
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
+  const [exportDialogOpen, setExportDialogOpen] = useState(false);
   const { plan, guild, activePhaseId, historyPast, historyFuture, undo, redo, setPlan, setWorkspaceBackup, setPlanMeta, resetPlan } =
     usePlanStore();
 
@@ -148,21 +148,10 @@ export function TopBar({ boardRef, view, onViewChange, onBoardFocusOpen, onCloud
           <button className="icon-button" title="Import plan JSON" onClick={() => fileInputRef.current?.click()}>
             <Upload size={16} />
           </button>
-          <button
-            className="icon-button"
-            title="Export plan JSON"
-            onClick={() => downloadTextFile(`${safeName(plan.title)}.wwm-plan.json`, serializePlan(plan))}
-          >
-            <FileJson size={16} />
-          </button>
-          <button
-            className="icon-button"
-            title="Export workspace backup"
-            onClick={() => downloadTextFile(`${safeName(plan.title)}-workspace-backup.json`, serializeWorkspaceBackup(plan, guild), 'application/json')}
-          >
+          <button className="icon-button" title="Export workspace" aria-label="Export workspace" onClick={() => setExportDialogOpen(true)}>
             <Database size={16} />
           </button>
-          <button className="icon-button" title="Export map PNG" onClick={() => boardRef.current?.exportPng()}>
+          <button className="icon-button" title="Quick export map PNG" onClick={() => boardRef.current?.exportPng()}>
             <FileDown size={16} />
           </button>
           <button className="icon-button danger" title="Reset local plan" onClick={() => setResetConfirmOpen(true)}>
@@ -199,6 +188,14 @@ export function TopBar({ boardRef, view, onViewChange, onBoardFocusOpen, onCloud
         notice={shareNotice}
         onClose={() => setShareDialogOpen(false)}
       />
+      <ExportDialog
+        open={exportDialogOpen}
+        plan={plan}
+        guild={guild}
+        activePhaseId={activePhaseId}
+        boardRef={boardRef}
+        onClose={() => setExportDialogOpen(false)}
+      />
       <ConfirmDialog
         open={resetConfirmOpen}
         eyebrow="Reset Local Plan"
@@ -215,8 +212,4 @@ export function TopBar({ boardRef, view, onViewChange, onBoardFocusOpen, onCloud
       />
     </>
   );
-}
-
-function safeName(value: string): string {
-  return value.replace(/[^a-z0-9]+/gi, '-').replace(/(^-|-$)/g, '').toLowerCase() || 'wwm-plan';
 }

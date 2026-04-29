@@ -8,9 +8,10 @@ import type { GuildMember, Player, Role } from '../../types/domain';
 
 type RosterPanelProps = {
   onOpenMemberData: () => void;
+  onQuickPlaceStart?: () => void;
 };
 
-export function RosterPanel({ onOpenMemberData }: RosterPanelProps) {
+export function RosterPanel({ onOpenMemberData, onQuickPlaceStart }: RosterPanelProps) {
   const {
     plan,
     guild,
@@ -19,6 +20,7 @@ export function RosterPanel({ onOpenMemberData }: RosterPanelProps) {
     selectPlayer,
     addMemberToPlan,
     removePlayer,
+    setTool,
   } = usePlanStore();
 
   void onOpenMemberData;
@@ -43,7 +45,11 @@ export function RosterPanel({ onOpenMemberData }: RosterPanelProps) {
                 stats={stats}
                 hasMarker={hasMarker}
                 isSelected={selectedPlayerId === player.id}
-                onSelect={() => selectPlayer(player.id)}
+                onSelect={() => {
+                  selectPlayer(player.id);
+                  setTool(hasMarker ? 'select' : 'place-player');
+                  onQuickPlaceStart?.();
+                }}
                 onRemove={() => removePlayer(player.id)}
               />
             );
@@ -62,7 +68,11 @@ export function RosterPanel({ onOpenMemberData }: RosterPanelProps) {
               stats={item.stats}
               hasMarker={false}
               isSelected={false}
-              onSelect={() => addMemberToPlan(item.member.id)}
+              onSelect={() => {
+                addMemberToPlan(item.member.id);
+                setTool('place-player');
+                onQuickPlaceStart?.();
+              }}
               onRemove={undefined}
             />
           ))}
@@ -103,7 +113,7 @@ function SquadRow({
         </span>
         <span className="roster-row-meta">
           {isPlanRow ? (
-            <span className={`marker-state ${hasMarker ? 'is-set' : ''}`}>{hasMarker ? 'On Map' : 'No Dot'}</span>
+            <span className={`marker-state ${hasMarker ? 'is-set' : ''}`}>{hasMarker ? 'On Map' : 'Click Place'}</span>
           ) : (
             <span className="marker-state is-set">{stats?.totalMatches ?? 0} GW</span>
           )}

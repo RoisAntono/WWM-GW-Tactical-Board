@@ -6,9 +6,26 @@ import { CircleDot, Eraser, FileText, Flag, MousePointer2, Route } from 'lucide-
 import { shouldReduceCanvasEffects } from '../../app/konvaPerformance';
 import { usePlanStore } from '../../app/store';
 import { assets } from '../../shared/assets';
-import { defaultObjectiveCategoryVisibility, getObjectiveCategory, objectiveAssets, objectiveLabels, roleConfigs } from '../../shared/constants';
+import {
+  boardVisibilityPresets,
+  defaultObjectiveCategoryVisibility,
+  getObjectiveCategory,
+  objectiveAssets,
+  objectiveLabels,
+  roleConfigs,
+  type BoardVisibilityPresetKey,
+} from '../../shared/constants';
 import { downloadDataUrl, downloadTextFile } from '../../shared/download';
-import type { Coordinate, ObjectiveMarker, ObjectiveType, Player, PlayerMarker, Route as RouteModel } from '../../types/domain';
+import type {
+  Coordinate,
+  LayerKey,
+  ObjectiveCategoryVisibility,
+  ObjectiveMarker,
+  ObjectiveType,
+  Player,
+  PlayerMarker,
+  Route as RouteModel,
+} from '../../types/domain';
 import { denormalize, mapSize, normalize, overlayScaleForView, routePoints } from './boardMath';
 import { BoardToolbar } from './BoardToolbar';
 import { useImageElement } from './useImageElement';
@@ -57,6 +74,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
   ref,
 ) {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const placeHitLayerRef = useRef<HTMLButtonElement>(null);
   const stageRef = useRef<Konva.Stage>(null);
   const groupRef = useRef<Konva.Group>(null);
   const viewRef = useRef<ViewState>({ x: 0, y: 0, scale: 0.16, fitted: false });
@@ -82,6 +100,7 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
     setTool,
     toggleLayer,
     toggleObjectiveCategory,
+    setBoardVisibilityPreset,
     selectPlayer,
     selectRoute,
     selectObjective,
@@ -125,6 +144,10 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
     ...defaultObjectiveCategoryVisibility,
     ...(objectiveCategoryVisibility ?? {}),
   };
+  const visibilityPreset = useMemo(
+    () => getActiveVisibilityPreset(layerVisibility, visibleObjectiveCategories),
+    [layerVisibility, visibleObjectiveCategories],
+  );
 
   useImperativeHandle(ref, () => ({
     exportPng: () => {
@@ -146,6 +169,29 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (tool !== 'place-player' || !selectedPlayerId) {
+      return undefined;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : undefined;
+      if (
+        target?.closest(
+          '.compact-squad-picker, .focus-tool-palette, .focus-layout-controls, .board-help',
+        )
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      placeSelectedPlayerFromClientPoint(event.clientX, event.clientY, placeHitLayerRef.current ?? document.body);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    return () => document.removeEventListener('pointerdown', handlePointerDown, true);
+  }, [selectedPlayerId, tool, view.x, view.y, view.scale]);
 
   useEffect(() => {
     if (!size.width || !size.height || view.fitted) {
@@ -384,8 +430,8 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
     commitTransientPanView();
   };
 
-  const handleMapClick = () => {
-    const position = getNormalizedPointer();
+  const handleMapClick = (stagePoint?: Coordinate) => {
+    const position = getNormalizedPointer(stagePoint);
     if (!position) {
       return;
     }
@@ -423,16 +469,64 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
     }
   };
 
-  const getNormalizedPointer = (): Coordinate | undefined => {
+  const getNormalizedPointer = (stagePoint?: Coordinate): Coordinate | undefined => {
     const stage = stageRef.current;
     const group = groupRef.current;
-    const pointer = stage?.getPointerPosition();
+    const pointer = stagePoint ?? stage?.getPointerPosition();
     if (!stage || !group || !pointer) {
       return undefined;
     }
 
     const transform = group.getAbsoluteTransform().copy().invert();
-    return normalize(transform.point(pointer));
+    const point = transform.point(pointer);
+    if (point.x < 0 || point.x > mapSize.width || point.y < 0 || point.y > mapSize.height) {
+      return undefined;
+    }
+
+    return normalize(point);
+  };
+
+  const getNormalizedStagePoint = (stagePoint: Coordinate): Coordinate | undefined => {
+    const currentView = viewRef.current;
+    const point = {
+      x: (stagePoint.x - currentView.x) / currentView.scale,
+      y: (stagePoint.y - currentView.y) / currentView.scale,
+    };
+    if (point.x < 0 || point.x > mapSize.width || point.y < 0 || point.y > mapSize.height) {
+      return undefined;
+    }
+
+    return normalize(point);
+  };
+
+  const getClampedNormalizedStagePoint = (stagePoint: Coordinate): Coordinate => {
+    const currentView = viewRef.current;
+    return normalize({
+      x: (stagePoint.x - currentView.x) / currentView.scale,
+      y: (stagePoint.y - currentView.y) / currentView.scale,
+    });
+  };
+
+  const placeSelectedPlayerFromClientPoint = (clientX: number, clientY: number, target: HTMLElement): void => {
+    const stage = stageRef.current;
+    const rect = stage?.container().getBoundingClientRect() ?? target.getBoundingClientRect();
+    const stagePoint = {
+      x: clientX - rect.left,
+      y: clientY - rect.top,
+    };
+    const position = getNormalizedPointer(stagePoint) ?? getNormalizedStagePoint(stagePoint) ?? getClampedNormalizedStagePoint(stagePoint);
+    if (!position) {
+      return;
+    }
+
+    const store = usePlanStore.getState();
+    const playerId = store.selectedPlayerId;
+    if (!playerId) {
+      return;
+    }
+
+    store.addPlayerMarker(playerId, position);
+    store.setTool('select');
   };
 
   const markerScale = overlayScaleForView(view.scale);
@@ -444,10 +538,12 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
         selectedObjectiveType={selectedObjectiveType}
         visibleLayers={layerVisibility}
         visibleObjectiveCategories={visibleObjectiveCategories}
+        visibilityPreset={visibilityPreset}
         hasSelection={hasSelection}
         onToolChange={setTool}
         onLayerToggle={toggleLayer}
         onObjectiveCategoryToggle={toggleObjectiveCategory}
+        onVisibilityPresetChange={setBoardVisibilityPreset}
         onObjectiveTypeChange={onObjectiveTypeChange}
         onRemoveSelected={removeSelected}
         onCompleteRoute={completeRoute}
@@ -474,7 +570,24 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
         }}
       />}
 
-      <div className="board-stage-wrap" ref={wrapperRef} data-testid="board-stage">
+      <div
+        className="board-stage-wrap"
+        ref={wrapperRef}
+        data-testid="board-stage"
+        onPointerDownCapture={(event) => {
+          if (tool !== 'place-player' || !selectedPlayerId) {
+            return;
+          }
+
+          const target = event.target instanceof Element ? event.target : undefined;
+          if (target?.closest('.compact-squad-picker, .focus-tool-palette, .focus-layout-controls, .board-help')) {
+            return;
+          }
+
+          event.preventDefault();
+          placeSelectedPlayerFromClientPoint(event.clientX, event.clientY, event.currentTarget);
+        }}
+      >
         {hideToolbar ? (
           <div className="focus-tool-palette" aria-label="Focus board tools">
             <button
@@ -551,6 +664,25 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                 </option>
               ))}
             </select>
+            <select
+              className="focus-visibility-select"
+              value={visibilityPreset}
+              onChange={(event) => {
+                const value = event.target.value as BoardVisibilityPresetKey | 'custom';
+                if (value !== 'custom') {
+                  setBoardVisibilityPreset(value);
+                }
+              }}
+              title="Layer visibility preset"
+              aria-label="Layer visibility preset"
+            >
+              <option value="custom">Custom</option>
+              {(Object.keys(boardVisibilityPresets) as BoardVisibilityPresetKey[]).map((preset) => (
+                <option key={preset} value={preset}>
+                  {boardVisibilityPresets[preset].label}
+                </option>
+              ))}
+            </select>
             {tool === 'draw-route' ? (
               <button type="button" className="text-action focus-finish-route" onClick={completeRoute}>
                 Finish
@@ -581,8 +713,6 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
               scaleX={view.scale}
               scaleY={view.scale}
               draggable={false}
-              onClick={handleMapClick}
-              onTap={handleMapClick}
             >
               {mapImage ? (
                 <Image
@@ -591,10 +721,18 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
                   width={mapSize.width}
                   height={mapSize.height}
                   opacity={0.88}
-                  listening={false}
+                  onClick={() => handleMapClick()}
+                  onTap={() => handleMapClick()}
                 />
               ) : (
-                <Rect width={mapSize.width} height={mapSize.height} fill="#6f7374" listening={false} />
+                <Rect
+                  name="map"
+                  width={mapSize.width}
+                  height={mapSize.height}
+                  fill="#6f7374"
+                  onClick={() => handleMapClick()}
+                  onTap={() => handleMapClick()}
+                />
               )}
 
               {layerVisibility.zones
@@ -720,6 +858,18 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
             </Group>
           </Layer>
         </Stage>
+        {tool === 'place-player' && selectedPlayerId ? (
+          <button
+            type="button"
+            ref={placeHitLayerRef}
+            className="place-player-hit-layer"
+            aria-label="Place selected player on map"
+            onPointerDown={(event) => {
+              event.preventDefault();
+              placeSelectedPlayerFromClientPoint(event.clientX, event.clientY, event.currentTarget);
+            }}
+          />
+        ) : null}
         <div className="board-help">
           <span>Wheel zoom</span>
           <span>Alt/Shift + wheel pan</span>
@@ -729,6 +879,10 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
               ? selectedRoute?.points.length === 1
                 ? 'Route start set; click next point'
                 : 'Click map to set route start'
+              : tool === 'place-player'
+                ? selectedPlayerId
+                  ? 'Click map to place selected player'
+                  : 'Select a squad member first'
               : tool === 'remove'
                 ? 'Click an object to remove it'
                 : 'Select a player to inspect details'}
@@ -743,6 +897,22 @@ export const BoardCanvas = forwardRef<BoardCanvasHandle, BoardCanvasProps>(funct
     </section>
   );
 });
+
+function getActiveVisibilityPreset(
+  layers: Record<LayerKey, boolean>,
+  objectiveCategories: ObjectiveCategoryVisibility,
+): BoardVisibilityPresetKey | 'custom' {
+  const entries = Object.entries(boardVisibilityPresets) as Array<[BoardVisibilityPresetKey, typeof boardVisibilityPresets[BoardVisibilityPresetKey]]>;
+  const match = entries.find(([, preset]) => (
+    visibilityMatches(layers, preset.layers) && visibilityMatches(objectiveCategories, preset.objectiveCategories)
+  ));
+
+  return match?.[0] ?? 'custom';
+}
+
+function visibilityMatches<T extends string>(current: Record<T, boolean>, preset: Record<T, boolean>): boolean {
+  return (Object.keys(preset) as T[]).every((key) => current[key] === preset[key]);
+}
 
 type PlayerDotProps = {
   marker: PlayerMarker;
@@ -1031,7 +1201,7 @@ function getTouchPoint(touch: Touch, container: HTMLDivElement): Coordinate {
 }
 
 function isBoardBackgroundTarget(target: Konva.Node, stage?: Konva.Stage | null, group?: Konva.Group | null): boolean {
-  return target === stage || target === group;
+  return target === stage || target === group || target.name() === 'map';
 }
 
 function isCoarsePointer(): boolean {

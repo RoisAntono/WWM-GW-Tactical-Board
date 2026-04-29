@@ -1,9 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { defaultLayerVisibility, defaultObjectiveCategoryVisibility, objectiveLabels } from '../shared/constants';
+import {
+  boardVisibilityPresets,
+  defaultLayerVisibility,
+  defaultObjectiveCategoryVisibility,
+  objectiveLabels,
+  type BoardVisibilityPresetKey,
+} from '../shared/constants';
 import { createId } from '../shared/id';
 import { createDefaultPlan } from '../features/strategy/defaultPlan';
-import { clonePhase } from '../features/strategy/phaseUtils';
+import { clonePhase, type PhaseDuplicateMode } from '../features/strategy/phaseUtils';
 import { createGuildWarsObjectivePreset } from '../features/board/objectivePresets';
 import {
   addGuildMember as addGuildMemberToDatabase,
@@ -83,13 +89,16 @@ type PlanStore = {
   resetPlan: () => void;
   setPlanMeta: (meta: Pick<TacticalPlan, 'title' | 'opponent'>) => void;
   setActivePhase: (phaseId: string) => void;
-  addPhaseFromActive: () => void;
+  addPhaseFromActive: (mode?: PhaseDuplicateMode) => void;
+  renamePhase: (phaseId: string, name: string) => void;
+  movePhase: (phaseId: string, direction: -1 | 1) => void;
   removePhase: (phaseId: string) => void;
   updatePhaseBriefing: (phaseId: string, briefing: string) => void;
   sanitizePlan: () => void;
   setTool: (tool: ToolMode) => void;
   toggleLayer: (layer: LayerKey) => void;
   toggleObjectiveCategory: (category: ObjectiveCategory) => void;
+  setBoardVisibilityPreset: (preset: BoardVisibilityPresetKey) => void;
   setGeminiApiKey: (apiKey: string) => void;
   clearGeminiApiKey: () => void;
   setSuppressOcrWarning: (suppress: boolean) => void;
@@ -235,19 +244,47 @@ export const usePlanStore = create<PlanStore>()(
           selectedObjectiveId: undefined,
           selectedNoteId: undefined,
         }),
-      addPhaseFromActive: () => {
+      addPhaseFromActive: (mode = 'all') => {
         const { plan, activePhaseId } = get();
         const activePhase = plan.phases.find((phase) => phase.id === activePhaseId);
         if (!activePhase) {
           return;
         }
 
-        const phase = clonePhase(activePhase, `${activePhase.name} Variant`);
+        const phase = clonePhase(activePhase, `${activePhase.name} Variant`, mode);
         mutatePlan(set, (currentPlan) => ({
           ...currentPlan,
           phases: [...currentPlan.phases, phase],
         }));
         set({ activePhaseId: phase.id });
+      },
+      renamePhase: (phaseId, name) => {
+        const trimmedName = name.trim();
+        if (!trimmedName) {
+          return;
+        }
+
+        updatePhase(set, phaseId, (phase) => ({
+          ...phase,
+          name: trimmedName,
+        }));
+      },
+      movePhase: (phaseId, direction) => {
+        const { plan } = get();
+        const currentIndex = plan.phases.findIndex((phase) => phase.id === phaseId);
+        const nextIndex = currentIndex + direction;
+        if (currentIndex < 0 || nextIndex < 0 || nextIndex >= plan.phases.length) {
+          return;
+        }
+
+        const phases = [...plan.phases];
+        const [phase] = phases.splice(currentIndex, 1);
+        phases.splice(nextIndex, 0, phase);
+
+        mutatePlan(set, (currentPlan) => ({
+          ...currentPlan,
+          phases,
+        }));
       },
       removePhase: (phaseId) => {
         const { plan, activePhaseId } = get();
@@ -307,6 +344,13 @@ export const usePlanStore = create<PlanStore>()(
             },
           };
         }),
+      setBoardVisibilityPreset: (presetKey) => {
+        const preset = boardVisibilityPresets[presetKey];
+        set({
+          layerVisibility: { ...preset.layers },
+          objectiveCategoryVisibility: { ...preset.objectiveCategories },
+        });
+      },
       setGeminiApiKey: (apiKey) =>
         set((state) => ({
           settings: {

@@ -1,6 +1,6 @@
 import { CircleDot, Crosshair, Download, Eraser, Eye, EyeOff, FileText, Flag, LocateFixed, MapPinned, MousePointer2, Route } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { objectiveCategoryLabels, objectiveLabels } from '../../shared/constants';
+import { boardVisibilityPresets, objectiveCategoryLabels, objectiveLabels, type BoardVisibilityPresetKey } from '../../shared/constants';
 import type { LayerKey, ObjectiveCategory, ObjectiveCategoryVisibility, ObjectiveType, ToolMode } from '../../types/domain';
 
 type BoardToolbarProps = {
@@ -8,10 +8,12 @@ type BoardToolbarProps = {
   selectedObjectiveType: ObjectiveType;
   visibleLayers: Record<LayerKey, boolean>;
   visibleObjectiveCategories: ObjectiveCategoryVisibility;
+  visibilityPreset: BoardVisibilityPresetKey | 'custom';
   hasSelection: boolean;
   onToolChange: (tool: ToolMode) => void;
   onLayerToggle: (layer: LayerKey) => void;
   onObjectiveCategoryToggle: (category: ObjectiveCategory) => void;
+  onVisibilityPresetChange: (preset: BoardVisibilityPresetKey) => void;
   onObjectiveTypeChange: (type: ObjectiveType) => void;
   onRemoveSelected: () => void;
   onCompleteRoute: () => void;
@@ -33,10 +35,12 @@ export function BoardToolbar({
   selectedObjectiveType,
   visibleLayers,
   visibleObjectiveCategories,
+  visibilityPreset,
   hasSelection,
   onToolChange,
   onLayerToggle,
   onObjectiveCategoryToggle,
+  onVisibilityPresetChange,
   onObjectiveTypeChange,
   onRemoveSelected,
   onCompleteRoute,
@@ -118,6 +122,26 @@ export function BoardToolbar({
         <Crosshair size={15} />
         Export Coords
       </button>
+
+      <select
+        className="visibility-preset-select"
+        value={visibilityPreset}
+        onChange={(event) => {
+          const value = event.target.value as BoardVisibilityPresetKey | 'custom';
+          if (value !== 'custom') {
+            onVisibilityPresetChange(value);
+          }
+        }}
+        title="Layer visibility preset"
+        aria-label="Layer visibility preset"
+      >
+        <option value="custom">Custom Layers</option>
+        {(Object.keys(boardVisibilityPresets) as BoardVisibilityPresetKey[]).map((preset) => (
+          <option key={preset} value={preset}>
+            {boardVisibilityPresets[preset].label}
+          </option>
+        ))}
+      </select>
 
       <div className="objective-filter-toggles">
         {(Object.keys(objectiveCategoryLabels) as ObjectiveCategory[]).map((category) => (

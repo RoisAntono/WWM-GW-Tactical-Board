@@ -1,15 +1,26 @@
 import { createId } from '../../shared/id';
 import type { Phase } from '../../types/domain';
 
-export function clonePhase(source: Phase, name = `${source.name} Copy`): Phase {
+export type PhaseDuplicateMode = 'all' | 'players' | 'objectives' | 'briefing';
+
+export function clonePhase(source: Phase, name = `${source.name} Copy`, mode: PhaseDuplicateMode = 'all'): Phase {
   return {
     ...source,
     id: createId('phase'),
     name,
-    playerMarkers: source.playerMarkers.map((marker) => ({ ...marker, id: createId('marker') })),
-    routes: source.routes.map((route) => ({ ...route, id: createId('route'), points: [...route.points] })),
-    objectives: source.objectives.map((objective) => ({ ...objective, id: createId('objective') })),
-    zones: source.zones.map((zone) => ({ ...zone, id: createId('zone'), points: [...zone.points] })),
-    notes: source.notes.map((note) => ({ ...note, id: createId('note') })),
+    playerMarkers: mode === 'all' || mode === 'players'
+      ? source.playerMarkers.map((marker) => ({ ...marker, id: createId('marker') }))
+      : [],
+    routes: mode === 'all'
+      ? source.routes.map((route) => ({ ...route, id: createId('route'), points: [...route.points] }))
+      : [],
+    objectives: mode === 'all' || mode === 'objectives'
+      ? source.objectives.map((objective) => ({ ...objective, id: createId('objective') }))
+      : [],
+    zones: mode === 'all'
+      ? source.zones.map((zone) => ({ ...zone, id: createId('zone'), points: [...zone.points] }))
+      : [],
+    notes: mode === 'all' ? source.notes.map((note) => ({ ...note, id: createId('note') })) : [],
+    briefing: mode === 'all' || mode === 'briefing' ? source.briefing : '',
   };
 }

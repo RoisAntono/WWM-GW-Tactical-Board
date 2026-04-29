@@ -165,6 +165,59 @@ export const defaultObjectiveCategoryVisibility: ObjectiveCategoryVisibility = {
   tree: true,
 };
 
+export const boardVisibilityPresets = {
+  planning: {
+    label: 'Planning',
+    layers: {
+      players: true,
+      routes: true,
+      objectives: true,
+      zones: true,
+      notes: true,
+      enemyAssumptions: false,
+    },
+    objectiveCategories: defaultObjectiveCategoryVisibility,
+  },
+  review: {
+    label: 'Review',
+    layers: {
+      players: true,
+      routes: true,
+      objectives: true,
+      zones: false,
+      notes: false,
+      enemyAssumptions: false,
+    },
+    objectiveCategories: defaultObjectiveCategoryVisibility,
+  },
+  'clean-map': {
+    label: 'Clean Map',
+    layers: {
+      players: false,
+      routes: false,
+      objectives: true,
+      zones: false,
+      notes: false,
+      enemyAssumptions: false,
+    },
+    objectiveCategories: defaultObjectiveCategoryVisibility,
+  },
+  screenshot: {
+    label: 'Screenshot',
+    layers: {
+      players: true,
+      routes: true,
+      objectives: true,
+      zones: false,
+      notes: false,
+      enemyAssumptions: false,
+    },
+    objectiveCategories: defaultObjectiveCategoryVisibility,
+  },
+} satisfies Record<string, { label: string; layers: LayerVisibility; objectiveCategories: ObjectiveCategoryVisibility }>;
+
+export type BoardVisibilityPresetKey = keyof typeof boardVisibilityPresets;
+
 export const defaultPhaseNames = [
   'Opening',
   'First Rotate',

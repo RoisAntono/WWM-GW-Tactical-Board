@@ -17,6 +17,7 @@ This file is the persistent project plan. Any future architecture plan, audit re
 - `guild` is the local source of truth for member, match, and performance data.
 - `plan.roster` is a tactical snapshot linked by `memberId`, synchronized from `guild`.
 - Tactical GW planning is the primary product goal. Member and match tracking should be reliable enough to support tactical work, but it does not need to become a full analytics platform yet.
+- Board flexibility roadmap is tracked in `docs/board-flexibility-roadmap.md`, covering Focus layout presets, compact squad picker, faster place-player flow, layer presets, phase workflow upgrades, cloud workspace flexibility, unified export, and desktop/mobile Focus polish.
 
 ## Completed From Previous Plans
 

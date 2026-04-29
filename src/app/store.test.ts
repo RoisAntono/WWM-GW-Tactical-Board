@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { defaultLayerVisibility, defaultObjectiveCategoryVisibility, defaultPlanTeams } from '../shared/constants';
+import {
+  boardVisibilityPresets,
+  defaultLayerVisibility,
+  defaultObjectiveCategoryVisibility,
+  defaultPlanTeams,
+} from '../shared/constants';
 import type { GuildDatabase, GuildMember, ImportRow, Phase, Player, TacticalPlan } from '../types/domain';
 import { createGuildMemberFromInput } from './data/domainUtils';
 import { normalizePersistedState, usePlanStore } from './store';
@@ -158,6 +163,65 @@ describe('workspace store history', () => {
     expect(usePlanStore.getState().selectedNoteId).toBeUndefined();
     expect(usePlanStore.getState().tool).toBe('select');
     expect(usePlanStore.getState().historyPast).toHaveLength(1);
+  });
+
+  it('applies board visibility presets without changing plan data', () => {
+    const planBefore = usePlanStore.getState().plan;
+
+    usePlanStore.getState().setBoardVisibilityPreset('clean-map');
+
+    expect(usePlanStore.getState().layerVisibility).toEqual(boardVisibilityPresets['clean-map'].layers);
+    expect(usePlanStore.getState().objectiveCategoryVisibility).toEqual(
+      boardVisibilityPresets['clean-map'].objectiveCategories,
+    );
+    expect(usePlanStore.getState().plan).toBe(planBefore);
+    expect(usePlanStore.getState().historyPast).toHaveLength(0);
+  });
+
+  it('renames, reorders, and duplicates phases with selected content modes', () => {
+    const plan = planFixture([
+      {
+        id: 'player-alpha',
+        ign: 'Alpha',
+        role: 'Attack',
+        stats: {},
+      },
+    ]);
+    plan.phases = [
+      {
+        ...plan.phases[0],
+        id: 'phase-one',
+        name: 'One',
+        objectives: [{ id: 'objective-1', type: 'red-tower', label: 'Tower', owner: 'enemy', position: { x: 0.2, y: 0.2 } }],
+        briefing: 'Hold north',
+      },
+      {
+        id: 'phase-two',
+        name: 'Two',
+        playerMarkers: [],
+        routes: [],
+        objectives: [],
+        zones: [],
+        notes: [],
+        briefing: '',
+      },
+    ];
+    usePlanStore.setState({ plan, activePhaseId: 'phase-one', historyPast: [], historyFuture: [] });
+
+    usePlanStore.getState().renamePhase('phase-one', 'Opening Hold');
+    expect(usePlanStore.getState().plan.phases[0].name).toBe('Opening Hold');
+
+    usePlanStore.getState().movePhase('phase-one', 1);
+    expect(usePlanStore.getState().plan.phases.map((phase) => phase.id)).toEqual(['phase-two', 'phase-one']);
+    expect(usePlanStore.getState().activePhaseId).toBe('phase-one');
+
+    usePlanStore.getState().addPhaseFromActive('objectives');
+    const duplicated = usePlanStore.getState().plan.phases.at(-1);
+    expect(duplicated?.name).toBe('Opening Hold Variant');
+    expect(duplicated?.objectives).toHaveLength(1);
+    expect(duplicated?.playerMarkers).toHaveLength(0);
+    expect(duplicated?.routes).toHaveLength(0);
+    expect(usePlanStore.getState().activePhaseId).toBe(duplicated?.id);
   });
 });
 

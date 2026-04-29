@@ -5,6 +5,7 @@ import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import { openWorkspaceShortShare, readWorkspaceShortShareId } from './workspaceShortShare';
 import { createWorkspaceSharePayload, decryptWorkspaceShareHash, hasWorkspaceShareHash, type WorkspaceSharePayload } from './workspaceShareLink';
 import type { BoardCanvasHandle } from '../features/board/BoardCanvas';
+import { CompactSquadPicker } from '../features/roster/CompactSquadPicker';
 import { RosterPanel } from '../features/roster/RosterPanel';
 import { InspectorPanel } from '../features/strategy/InspectorPanel';
 import { PhaseTabs } from '../features/strategy/PhaseTabs';
@@ -13,6 +14,8 @@ import type { WorkspaceSharePreviewState } from '../features/strategy/WorkspaceS
 import type { ObjectiveType } from '../types/domain';
 
 type AppView = 'board' | 'members' | 'settings';
+type FocusLayout = 'board-only' | 'board-squad' | 'board-inspector' | 'board-phases';
+const focusLayoutStorageKey = 'gwwm-focus-layout';
 
 const BoardCanvas = lazy(() => import('../features/board/BoardCanvas').then((module) => ({ default: module.BoardCanvas })));
 const MemberDataPage = lazy(() => import('../features/guild/MemberDataPage').then((module) => ({ default: module.MemberDataPage })));
@@ -28,7 +31,7 @@ export function App() {
   const [settingsNotice, setSettingsNotice] = useState('');
   const [mobilePanel, setMobilePanel] = useState<'roster' | 'inspector' | null>(null);
   const [boardFocus, setBoardFocus] = useState(false);
-  const [phasePanelOpen, setPhasePanelOpen] = useState(false);
+  const [focusLayout, setFocusLayout] = useState<FocusLayout>('board-only');
   const [selectedObjectiveType, setSelectedObjectiveType] = useState<ObjectiveType>('red-tower');
   const [sharePreview, setSharePreview] = useState<WorkspaceSharePreviewState>();
   const [cloudSavesOpen, setCloudSavesOpen] = useState(false);
@@ -42,6 +45,17 @@ export function App() {
   useEffect(() => {
     sanitizePlan();
   }, [sanitizePlan]);
+
+  useEffect(() => {
+    const storedLayout = window.localStorage.getItem(focusLayoutStorageKey);
+    if (isFocusLayout(storedLayout)) {
+      setFocusLayout(storedLayout);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(focusLayoutStorageKey, focusLayout);
+  }, [focusLayout]);
 
   useEffect(() => {
     let cancelled = false;
@@ -87,7 +101,7 @@ export function App() {
     setSettingsNotice(nextView === 'settings' ? notice : '');
     setMobilePanel(null);
     setBoardFocus(false);
-    setPhasePanelOpen(false);
+    setFocusLayout('board-only');
   };
 
   const toggleBoardFocus = () => {
@@ -95,10 +109,14 @@ export function App() {
       const nextFocused = !focused;
       if (!nextFocused) {
         setMobilePanel(null);
-        setPhasePanelOpen(false);
       }
       return nextFocused;
     });
+  };
+
+  const setFocusPanel = (layout: Exclude<FocusLayout, 'board-only'>) => {
+    setFocusLayout((current) => (current === layout ? 'board-only' : layout));
+    setMobilePanel(null);
   };
 
   const closeSharePreview = () => {
@@ -116,6 +134,9 @@ export function App() {
     closeSharePreview();
   };
 
+  const rosterPanelOpen = boardFocus ? focusLayout === 'board-squad' : mobilePanel === 'roster';
+  const inspectorPanelOpen = boardFocus ? focusLayout === 'board-inspector' : mobilePanel === 'inspector';
+
   return (
     <div className={`app-shell ${view !== 'board' ? 'is-data-view' : ''} ${boardFocus ? 'is-board-focus' : ''}`}>
       {view === 'board' && boardFocus ? null : (
@@ -131,20 +152,27 @@ export function App() {
         <>
           {boardFocus ? null : <PhaseTabs />}
           <main
-            className={`workspace-grid ${boardFocus && mobilePanel === 'roster' ? 'has-roster-open' : ''} ${
-              boardFocus && mobilePanel === 'inspector' ? 'has-inspector-open' : ''
-            }`}
+            className={`workspace-grid ${boardFocus && focusLayout === 'board-squad' ? 'has-roster-open' : ''} ${
+              boardFocus && focusLayout === 'board-inspector' ? 'has-inspector-open' : ''
+            } ${boardFocus && focusLayout === 'board-phases' ? 'has-phases-open' : ''}`}
           >
-            <div className={`workspace-panel-slot roster-slot ${mobilePanel === 'roster' ? 'is-mobile-open' : ''}`}>
+            <div className={`workspace-panel-slot roster-slot ${rosterPanelOpen ? 'is-mobile-open' : ''}`}>
               <button
                 className="icon-button mobile-panel-close"
                 title="Close squad panel"
                 aria-label="Close squad panel"
-                onClick={() => setMobilePanel(null)}
+                onClick={() => {
+                  setMobilePanel(null);
+                  setFocusLayout('board-only');
+                }}
               >
                 <X size={17} />
               </button>
-              <RosterPanel onOpenMemberData={() => changeView('members')} />
+              {boardFocus ? (
+                <CompactSquadPicker />
+              ) : (
+                <RosterPanel onOpenMemberData={() => changeView('members')} onQuickPlaceStart={() => setMobilePanel(null)} />
+              )}
             </div>
             <Suspense fallback={<BoardCanvasFallback hideToolbar={boardFocus} />}>
               <BoardCanvas
@@ -154,12 +182,15 @@ export function App() {
                 hideToolbar={boardFocus}
               />
             </Suspense>
-            <div className={`workspace-panel-slot inspector-slot ${mobilePanel === 'inspector' ? 'is-mobile-open' : ''}`}>
+            <div className={`workspace-panel-slot inspector-slot ${inspectorPanelOpen ? 'is-mobile-open' : ''}`}>
               <button
                 className="icon-button mobile-panel-close"
                 title="Close inspector panel"
                 aria-label="Close inspector panel"
-                onClick={() => setMobilePanel(null)}
+                onClick={() => {
+                  setMobilePanel(null);
+                  setFocusLayout('board-only');
+                }}
               >
                 <X size={17} />
               </button>
@@ -172,44 +203,47 @@ export function App() {
               </button>
               {boardFocus ? (
                 <button
-                  className={`mode-toggle ${phasePanelOpen ? 'is-active' : ''}`}
-                  onClick={() => {
-                    setPhasePanelOpen((open) => !open);
-                    setMobilePanel(null);
-                  }}
+                  className={`mode-toggle ${focusLayout === 'board-phases' ? 'is-active' : ''}`}
+                  onClick={() => setFocusPanel('board-phases')}
                 >
                   <ListChecks size={15} />
                   Phases
                 </button>
               ) : null}
               <button
-                className={`mode-toggle ${mobilePanel === 'roster' ? 'is-active' : ''}`}
+                className={`mode-toggle ${rosterPanelOpen ? 'is-active' : ''}`}
                 onClick={() => {
+                  if (boardFocus) {
+                    setFocusPanel('board-squad');
+                    return;
+                  }
                   setMobilePanel((panel) => (panel === 'roster' ? null : 'roster'));
-                  setPhasePanelOpen(false);
                 }}
               >
                 <PanelLeft size={15} />
                 Squad
               </button>
               <button
-                className={`mode-toggle ${mobilePanel === 'inspector' ? 'is-active' : ''}`}
+                className={`mode-toggle ${inspectorPanelOpen ? 'is-active' : ''}`}
                 onClick={() => {
+                  if (boardFocus) {
+                    setFocusPanel('board-inspector');
+                    return;
+                  }
                   setMobilePanel((panel) => (panel === 'inspector' ? null : 'inspector'));
-                  setPhasePanelOpen(false);
                 }}
               >
                 <PanelRight size={15} />
                 Inspector
               </button>
             </div>
-            {boardFocus && phasePanelOpen ? (
+            {boardFocus && focusLayout === 'board-phases' ? (
               <div className="focus-phase-panel">
                 <button
                   className="icon-button mobile-panel-close"
                   title="Close phases panel"
                   aria-label="Close phases panel"
-                  onClick={() => setPhasePanelOpen(false)}
+                  onClick={() => setFocusLayout('board-only')}
                 >
                   <X size={17} />
                 </button>
@@ -222,7 +256,6 @@ export function App() {
                 aria-label="Close board panel"
                 onClick={() => {
                   setMobilePanel(null);
-                  setPhasePanelOpen(false);
                 }}
               />
             ) : null}
@@ -274,4 +307,8 @@ function clearWorkspaceShareHash(): void {
     const pathname = readWorkspaceShortShareId(window.location.pathname) ? '/' : window.location.pathname;
     window.history.replaceState(null, '', `${pathname}${window.location.search}`);
   }
+}
+
+function isFocusLayout(value: unknown): value is FocusLayout {
+  return value === 'board-only' || value === 'board-squad' || value === 'board-inspector' || value === 'board-phases';
 }
