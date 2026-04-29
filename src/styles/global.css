@@ -511,16 +511,6 @@ button:disabled {
   display: inline-grid;
 }
 
-.app-shell.is-board-focus .mobile-panel-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  display: block;
-  border: 0;
-  background: rgba(0, 0, 0, 0.38);
-  cursor: default;
-}
-
 .app-shell.is-board-focus .focus-phase-panel {
   position: fixed;
   top: 12px;
@@ -548,6 +538,13 @@ button:disabled {
   right: 14px;
   z-index: 72;
   display: inline-grid;
+}
+
+@media (min-width: 721px) {
+  .app-shell.is-board-focus .workspace-grid.has-roster-open .focus-tool-palette {
+    left: min(390px, calc(100vw - 124px));
+    max-width: calc(100% - min(410px, calc(100vw - 104px)));
+  }
 }
 
 .panel {
@@ -2571,7 +2568,7 @@ button:disabled {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 24;
+  z-index: 80;
   display: flex;
   align-items: center;
   max-width: calc(100% - 20px);

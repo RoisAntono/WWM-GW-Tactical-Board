@@ -130,7 +130,11 @@ export function App() {
       {view === 'board' ? (
         <>
           {boardFocus ? null : <PhaseTabs />}
-          <main className="workspace-grid">
+          <main
+            className={`workspace-grid ${boardFocus && mobilePanel === 'roster' ? 'has-roster-open' : ''} ${
+              boardFocus && mobilePanel === 'inspector' ? 'has-inspector-open' : ''
+            }`}
+          >
             <div className={`workspace-panel-slot roster-slot ${mobilePanel === 'roster' ? 'is-mobile-open' : ''}`}>
               <button
                 className="icon-button mobile-panel-close"
@@ -212,7 +216,7 @@ export function App() {
                 <PhaseTabs />
               </div>
             ) : null}
-            {mobilePanel || phasePanelOpen ? (
+            {!boardFocus && mobilePanel ? (
               <button
                 className="mobile-panel-backdrop"
                 aria-label="Close board panel"
