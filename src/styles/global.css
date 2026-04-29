@@ -75,7 +75,7 @@ body {
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.88)),
-    url('../../Assets/any-background.webp') center/cover fixed;
+    url('../../Assets/any-background.webp') center/cover;
 }
 
 .app-shell {
